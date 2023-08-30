@@ -4,68 +4,64 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class TimeTrackBar {
-
-    private JFrame frame;         // 主窗口
-    private JPanel taskPanel;     // 包含所有计时任务的面板
+    private JFrame frame;
+    private JPanel taskPanel;
 
     public TimeTrackBar() {
         frame = new JFrame("老6时间进度条");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(700, 100);  // 默认窗口大小为一个计时任务的高度
 
-        taskPanel = new JPanel(); 
-        taskPanel.setLayout(new BoxLayout(taskPanel, BoxLayout.Y_AXIS)); // 使用BoxLayout，使任务垂直堆叠
-        frame.add(taskPanel, BorderLayout.CENTER);
+        taskPanel = new JPanel();
+        taskPanel.setLayout(new BoxLayout(taskPanel, BoxLayout.Y_AXIS));
+        frame.add(taskPanel, BorderLayout.PAGE_START);
 
-        // 在程序开始时，添加一个计时任务
         addNewTimerTask(true);
 
+        frame.setSize(700, 70);
         frame.setVisible(true);
     }
 
-    // 添加新计时任务
     private void addNewTimerTask(boolean isFirst) {
         TimerTaskPanel timerTask = new TimerTaskPanel(isFirst);
         taskPanel.add(timerTask);
-        frame.pack();
+        frame.setSize(700, frame.getHeight() + 40);
     }
 
-    // 删除指定的计时任务
     private void removeTimerTask(TimerTaskPanel timerTask) {
         taskPanel.remove(timerTask);
-        frame.pack();   // 重新调整窗口大小以适应内容
+        frame.setSize(700, frame.getHeight() - 40);
         frame.revalidate();
         frame.repaint();
     }
 
-    // TimerTaskPanel 是每个计时任务的面板，包括命名字段、进度条和计时控件
     private class TimerTaskPanel extends JPanel {
-        private JProgressBar progressBar;      // 显示进度的进度条
-        private JTextField nameField, durationField;  // 名称和持续时间输入字段
-        private JLabel remainingTimeLabel;     // 显示剩余时间的标签
-        private int duration = 60;             // 默认任务持续时间
-        private Timer timer;                   // 用于计时的计时器
+        private JProgressBar progressBar;
+        private JTextField nameField, daysField, hoursField, minutesField, secondsField;
+        private JLabel remainingTimeLabel;
+        private int duration;
+        private Timer timer;
+        private JPanel timeInputPanel;  // 新增的面板，用于容纳时间设置部分
 
         public TimerTaskPanel(boolean isFirst) {
             super(new BorderLayout());
-            setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
 
-            JPanel westPanel = new JPanel();  // 控制按钮和名称字段面板
+            JPanel westPanel = new JPanel();
             JButton controlButton;
             if (isFirst) {
-                controlButton = new JButton("+");  // 第一行只有加号按钮
+                controlButton = new JButton("+");
+                controlButton.setPreferredSize(new Dimension(40, 30));
                 controlButton.addActionListener(e -> addNewTimerTask(false));
             } else {
-                controlButton = new JButton("-");  // 其他行都有减号按钮
+                controlButton = new JButton("-");
+                controlButton.setPreferredSize(new Dimension(40, 30));
                 controlButton.addActionListener(e -> removeTimerTask(this));
             }
             westPanel.add(controlButton);
 
-            nameField = new JTextField(8);
+            nameField = new JTextField(7);
             nameField.addKeyListener(new KeyAdapter() {
-                // 限制名称字段的长度为8个字符
                 public void keyTyped(KeyEvent e) {
-                    if (nameField.getText().length() >= 8) {
+                    if (nameField.getText().length() >= 7) {
                         e.consume();
                     }
                 }
@@ -75,31 +71,62 @@ public class TimeTrackBar {
 
             progressBar = new JProgressBar();
             progressBar.setValue(0);
+            progressBar.setPreferredSize(new Dimension(Integer.MAX_VALUE, 30));
             progressBar.setStringPainted(true);
             add(progressBar, BorderLayout.CENTER);
 
-            JPanel eastPanel = new JPanel();  // 任务控制面板，包括持续时间、剩余时间和开始按钮
-            durationField = new JTextField(4);
-            durationField.setText(String.valueOf(duration));
-            remainingTimeLabel = new JLabel("0/" + duration + " 秒");
-            JButton startButton = new JButton("▶");  // 使用三角形字符作为开始按钮
+            JPanel eastPanel = new JPanel();
+
+            // 定义新的timeInputPanel
+            timeInputPanel = new JPanel();
+            daysField = new JTextField(2);
+            daysField.setText("0");
+            timeInputPanel.add(daysField);
+            timeInputPanel.add(new JLabel("d"));
+            hoursField = new JTextField(2);
+            hoursField.setText("0");
+            timeInputPanel.add(hoursField);
+            timeInputPanel.add(new JLabel("h"));
+            minutesField = new JTextField(2);
+            minutesField.setText("0");
+            timeInputPanel.add(minutesField);
+            timeInputPanel.add(new JLabel("m"));
+            secondsField = new JTextField(2);
+            secondsField.setText("0");
+            timeInputPanel.add(secondsField);
+            timeInputPanel.add(new JLabel("s"));
+            eastPanel.add(timeInputPanel);
+
+            remainingTimeLabel = new JLabel("0d 0h 0m 0s");
+            JButton startButton = new JButton("▶");
             startButton.setForeground(Color.GREEN);
+            startButton.setPreferredSize(new Dimension(40, 30));
             startButton.addActionListener(e -> startCountdown());
 
-            eastPanel.add(durationField);
+            JButton toggleButton = new JButton("⏲");  // 使用时钟字符，用于显示/隐藏时间设置部分
+            toggleButton.setPreferredSize(new Dimension(40, 30));
+            toggleButton.addActionListener(e -> {
+                timeInputPanel.setVisible(!timeInputPanel.isVisible());
+                TimeTrackBar.this.frame.revalidate();  // 确保面板重新布局
+            });
+            eastPanel.add(toggleButton);
+
             eastPanel.add(remainingTimeLabel);
             eastPanel.add(startButton);
             add(eastPanel, BorderLayout.EAST);
         }
 
-        // 开始计时
         private void startCountdown() {
             if (timer != null) {
                 timer.stop();
             }
 
             try {
-                duration = Integer.parseInt(durationField.getText());
+                int days = Integer.parseInt(daysField.getText());
+                int hours = Integer.parseInt(hoursField.getText());
+                int minutes = Integer.parseInt(minutesField.getText());
+                int seconds = Integer.parseInt(secondsField.getText());
+                duration = seconds + minutes * 60 + hours * 60 * 60 + days * 24 * 60 * 60;
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(frame, "请输入有效的时间数值.");
                 return;
@@ -108,11 +135,22 @@ public class TimeTrackBar {
             progressBar.setMaximum(duration);
             progressBar.setValue(0);
 
+            // 当计时开始时，隐藏timeInputPanel
+            timeInputPanel.setVisible(false);
+            TimeTrackBar.this.frame.revalidate();
+
             timer = new Timer(1000, e -> {
                 int currentValue = progressBar.getValue();
                 if (currentValue < duration) {
                     progressBar.setValue(currentValue + 1);
-                    remainingTimeLabel.setText(currentValue + 1 + "/" + duration + " 秒");
+                    int remainingTime = duration - currentValue - 1;
+                    int daysLeft = remainingTime / (24 * 60 * 60);
+                    remainingTime %= 24 * 60 * 60;
+                    int hoursLeft = remainingTime / (60 * 60);
+                    remainingTime %= 60 * 60;
+                    int minutesLeft = remainingTime / 60;
+                    int secondsLeft = remainingTime % 60;
+                    remainingTimeLabel.setText(daysLeft + "d " + hoursLeft + "h " + minutesLeft + "m " + secondsLeft + "s");
                 } else {
                     ((Timer) e.getSource()).stop();
                 }
