@@ -8,7 +8,7 @@ public class TimeTrackBar {
     private JPanel taskPanel;
 
     public TimeTrackBar() {
-        frame = new JFrame("老6时间进度条");
+        frame = new JFrame("老6倒计时-时间进度条");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         taskPanel = new JPanel();
@@ -79,23 +79,20 @@ public class TimeTrackBar {
 
             // 定义新的timeInputPanel
             timeInputPanel = new JPanel();
-            daysField = new JTextField(2);
-            daysField.setText("0");
+            daysField = new JTextField(2);  
             timeInputPanel.add(daysField);
             timeInputPanel.add(new JLabel("d"));
             hoursField = new JTextField(2);
-            hoursField.setText("0");
             timeInputPanel.add(hoursField);
             timeInputPanel.add(new JLabel("h"));
             minutesField = new JTextField(2);
-            minutesField.setText("0");
             timeInputPanel.add(minutesField);
             timeInputPanel.add(new JLabel("m"));
             secondsField = new JTextField(2);
-            secondsField.setText("0");
             timeInputPanel.add(secondsField);
             timeInputPanel.add(new JLabel("s"));
             eastPanel.add(timeInputPanel);
+            
 
             remainingTimeLabel = new JLabel("0d 0h 0m 0s");
             JButton startButton = new JButton("▶");
@@ -122,10 +119,10 @@ public class TimeTrackBar {
             }
 
             try {
-                int days = Integer.parseInt(daysField.getText());
-                int hours = Integer.parseInt(hoursField.getText());
-                int minutes = Integer.parseInt(minutesField.getText());
-                int seconds = Integer.parseInt(secondsField.getText());
+                int days = daysField.getText().isEmpty() ? 0 : Integer.parseInt(daysField.getText());
+                int hours = hoursField.getText().isEmpty() ? 0 : Integer.parseInt(hoursField.getText());
+                int minutes = minutesField.getText().isEmpty() ? 0 : Integer.parseInt(minutesField.getText());
+                int seconds = secondsField.getText().isEmpty() ? 0 : Integer.parseInt(secondsField.getText());
                 duration = seconds + minutes * 60 + hours * 60 * 60 + days * 24 * 60 * 60;
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(frame, "请输入有效的时间数值.");
