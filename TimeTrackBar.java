@@ -3,35 +3,36 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+
 public class TimeTrackBar {
-    private JFrame frame;
+    private JFrame mainFrame;
     private JPanel taskPanel;
 
     public TimeTrackBar() {
-        frame = new JFrame("老6倒计时-时间进度条");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame = new JFrame("老6倒计时-时间进度条");
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         taskPanel = new JPanel();
         taskPanel.setLayout(new BoxLayout(taskPanel, BoxLayout.Y_AXIS));
-        frame.add(taskPanel, BorderLayout.PAGE_START);
+        mainFrame.add(taskPanel, BorderLayout.PAGE_START);
 
         addNewTimerTask(true);
 
-        frame.setSize(700, 70);
-        frame.setVisible(true);
+        mainFrame.setSize(900, 70);
+        mainFrame.setVisible(true);
     }
 
     private void addNewTimerTask(boolean isFirst) {
         TimerTaskPanel timerTask = new TimerTaskPanel(isFirst);
         taskPanel.add(timerTask);
-        frame.setSize(700, frame.getHeight() + 40);
+        mainFrame.setSize(900, mainFrame.getHeight() + 45);
     }
 
     private void removeTimerTask(TimerTaskPanel timerTask) {
         taskPanel.remove(timerTask);
-        frame.setSize(700, frame.getHeight() - 40);
-        frame.revalidate();
-        frame.repaint();
+        mainFrame.setSize(900, mainFrame.getHeight() - 45);
+        mainFrame.revalidate();
+        mainFrame.repaint();
     }
 
     private class TimerTaskPanel extends JPanel {
@@ -104,7 +105,7 @@ public class TimeTrackBar {
             toggleButton.setPreferredSize(new Dimension(40, 30));
             toggleButton.addActionListener(e -> {
                 timeInputPanel.setVisible(!timeInputPanel.isVisible());
-                TimeTrackBar.this.frame.revalidate();  // 确保面板重新布局
+                TimeTrackBar.this.mainFrame.revalidate();  // 确保面板重新布局
             });
             eastPanel.add(toggleButton);
 
@@ -125,7 +126,7 @@ public class TimeTrackBar {
                 int seconds = secondsField.getText().isEmpty() ? 0 : Integer.parseInt(secondsField.getText());
                 duration = seconds + minutes * 60 + hours * 60 * 60 + days * 24 * 60 * 60;
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(frame, "请输入有效的时间数值.");
+                JOptionPane.showMessageDialog(mainFrame, "请输入有效的时间数值.");
                 return;
             }
 
@@ -134,7 +135,7 @@ public class TimeTrackBar {
 
             // 当计时开始时，隐藏timeInputPanel
             timeInputPanel.setVisible(false);
-            TimeTrackBar.this.frame.revalidate();
+            TimeTrackBar.this.mainFrame.revalidate();
 
             timer = new Timer(1000, e -> {
                 int currentValue = progressBar.getValue();
@@ -153,6 +154,35 @@ public class TimeTrackBar {
                 }
             });
             timer.start();
+
+            printSizes(); 
+        }
+        
+    }
+
+    private void printSizes() {
+        System.out.println("mainFrame Size: " + mainFrame.getSize());
+        System.out.println("taskPanel Size: " + taskPanel.getSize());
+
+        for (Component component : taskPanel.getComponents()) {
+            if (component instanceof TimerTaskPanel) {
+                TimerTaskPanel timerTaskPanel = (TimerTaskPanel) component;
+                System.out.println("progressBar Size: " + timerTaskPanel.progressBar.getSize());
+                System.out.println("nameField Size: " + timerTaskPanel.nameField.getSize());
+                System.out.println("daysField Size: " + timerTaskPanel.daysField.getSize());
+                System.out.println("hoursField Size: " + timerTaskPanel.hoursField.getSize());
+                System.out.println("minutesField Size: " + timerTaskPanel.minutesField.getSize());
+                System.out.println("secondsField Size: " + timerTaskPanel.secondsField.getSize());
+                System.out.println("remainingTimeLabel Size: " + timerTaskPanel.remainingTimeLabel.getSize());
+                System.out.println("timeInputPanel Size: " + timerTaskPanel.timeInputPanel.getSize());
+                if (timerTaskPanel.timer != null) {
+                    System.out.println("Timer's Initial Delay: " + timerTaskPanel.timer.getInitialDelay());
+                    System.out.println("Timer's Delay: " + timerTaskPanel.timer.getDelay());
+                } else {
+                    System.out.println("Timer is null");
+                }
+                System.out.println("duration Value: " + timerTaskPanel.duration);
+            }
         }
     }
 
