@@ -10,7 +10,6 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.URL;
 
-
 public class TimeTrackBar {
     private JFrame mainFrame;
     private JPanel taskPanel;
@@ -53,8 +52,7 @@ public class TimeTrackBar {
         private JButton startButton;
         private boolean isTimerRunning = false;
         private Clip clip;
-        private boolean isSoundEnabled = true;  // 初始状态不静音
-
+        private boolean isSoundEnabled = true; // 初始状态不静音
 
         public TimerTaskPanel(boolean isFirst) {
             super(new BorderLayout());
@@ -115,6 +113,7 @@ public class TimeTrackBar {
 
             JButton toggleButton = new JButton("⏲"); // 使用时钟字符，用于显示/隐藏时间设置部分
             toggleButton.setPreferredSize(new Dimension(40, 30));
+            toggleButton.setForeground(Color.MAGENTA);
             toggleButton.addActionListener(e -> {
                 timeInputPanel.setVisible(!timeInputPanel.isVisible());
                 TimeTrackBar.this.mainFrame.revalidate(); // 确保面板重新布局
@@ -124,6 +123,7 @@ public class TimeTrackBar {
             soundToggleButton = new JButton("\u266B"); // 默认为有声音的状态
             Font emojiFont = new Font("Apple Color Emoji", Font.PLAIN, 12); // For macOS
             soundToggleButton.setFont(emojiFont);
+            soundToggleButton.setForeground(Color.ORANGE);
             System.out.println(soundToggleButton.getFont());
 
             soundToggleButton.setPreferredSize(new Dimension(40, 30));
@@ -140,15 +140,15 @@ public class TimeTrackBar {
             if (clip != null && clip.isActive()) { // 如果音乐正在播放
                 clip.stop();
                 soundToggleButton.setText("\u266B");
-                soundToggleButton.setBackground(null);
+                soundToggleButton.setForeground(Color.BLACK);
             } else {
                 isSoundEnabled = !isSoundEnabled;
                 if (isSoundEnabled) {
                     soundToggleButton.setText("\u266B");
-                    soundToggleButton.setBackground(null);
+                    soundToggleButton.setForeground(Color.ORANGE);
                 } else {
                     soundToggleButton.setText("\u263D");
-                    soundToggleButton.setBackground(Color.RED);
+                    soundToggleButton.setForeground(Color.BLUE);
                 }
             }
         }
@@ -236,7 +236,6 @@ public class TimeTrackBar {
                 JOptionPane.showMessageDialog(mainFrame, "发生了其他错误。");
             }
         }
-        
 
     }
 
