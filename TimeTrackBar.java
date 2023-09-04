@@ -50,14 +50,14 @@ public class TimeTrackBar {
         private JTextField nameField, daysField, hoursField, minutesField, secondsField;
         private JLabel countdownRemainingTime;
         private int countdownDuration;
-        private Timer countdownTimer;
+        private Timer countdownTimer; // 一个timer
         private JPanel timeInputPanel; // 新增的面板，用于容纳时间设置部分
         private JButton soundToggleButton; // 警报声音按钮
         private JButton startPauseButton, stopButton;
-        private boolean isTimerRunning = false;
+        private boolean isTimerRunning = false; // 表示计时器是否正在运行，不论它是倒计时还是秒表。
         private Clip clip;
-        private boolean isSoundEnabled = true; // 初始状态不静音
-        private boolean isTimerMode = false; // 新增变量用于判断当前是否为秒表模式
+        private boolean isSoundEnabled = true; // 初始状态为非静音
+        private boolean isTimerMode = false; // 表示计时器的模式。如果它是true，计时器是秒表模式，否则它是倒计时模式。
         private boolean isTimerPaused = false; // 用于跟踪计时器是否已暂停
 
         // TimerTaskPanel 构造函数: 设置面板的外观和功能。添加 "+" 或 "-" 按钮用于添加或移除任务。添加计时器设置部分。
@@ -156,7 +156,7 @@ public class TimeTrackBar {
 
         }
 
-        // 开始倒计时 - 如果没有设置时间，则默认为秒表模式。
+        // 开始倒计时 - 如果没有设置时间，则默认为秒表模式。如果有时间设置，就进入倒计时模式。
         private void startCountdownTimer() {
             // 检查是否是秒表
             if (isTimerRunning) {
@@ -173,7 +173,7 @@ public class TimeTrackBar {
                 startTimer();
                 return;
             }
-            // 如果倒计时不为空
+            // 如果有时间设置
             if (countdownTimer != null) {
                 countdownTimer.stop();
             }
@@ -230,7 +230,7 @@ public class TimeTrackBar {
             printSizes();
         }
 
-        // 停止倒计时 - 如果有音乐播放，它也会被停止。
+        // 停止倒计时 - 如果停止音乐播放，它也会被停止。
         private void stopCountdownTimer() {
             if (countdownTimer != null) {
                 countdownTimer.stop();
@@ -241,9 +241,15 @@ public class TimeTrackBar {
             isTimerRunning = false;
             startPauseButton.setText("▶");
             startPauseButton.setForeground(Color.GREEN);
-            stopButton.setForeground(Color.GRAY);
+            stopButton.setForeground(Color.BLUE);
             startPauseButton.removeActionListener(startPauseButton.getActionListeners()[0]); // 移除旧的监听器
             startPauseButton.addActionListener(e -> startCountdownTimer()); // 添加回原始的监听器
+
+            // 重置进度条和时间显示
+            // progressBar.setValue(0);
+            // countdownRemainingTime.setText("0d 0h 0m 0s");
+            // stopButton.addActionListener(e -> stopTimer());
+
         }
 
         // 开始秒表
@@ -270,7 +276,7 @@ public class TimeTrackBar {
             countdownTimer.start();
             isTimerRunning = true;
             startPauseButton.setText("\u23F8");
-            startPauseButton.setForeground(Color.BLUE);
+            // startPauseButton.setForeground(Color.PINK);
             stopButton.setForeground(Color.RED);
 
             // 当计时开始时，隐藏timeInputPanel
@@ -287,10 +293,16 @@ public class TimeTrackBar {
             }
             isTimerMode = false;
             isTimerRunning = false;
+            startPauseButton.setText("▶");
             stopButton.setForeground(Color.BLACK);
+
+            // 重置进度条和时间显示
+            // progressBar.setValue(0);
+            // countdownRemainingTime.setText("0d 0h 0m 0s");
+
         }
 
-        // 播放暂停转换
+        // 播放/暂停-按键样式转换
         private void togglePauseResume() {
             if (!isTimerRunning)
                 return;
@@ -298,9 +310,13 @@ public class TimeTrackBar {
             if (!isTimerPaused) {
                 countdownTimer.stop();
                 startPauseButton.setText("▶");
+                // startPauseButton.setForeground(Color.GREEN);
+
             } else {
                 countdownTimer.start();
                 startPauseButton.setText("⏸");
+                // startPauseButton.setForeground(Color.ORANGE);
+
             }
             isTimerPaused = !isTimerPaused;
         }
@@ -315,7 +331,7 @@ public class TimeTrackBar {
             updateSoundButtonAppearance();
         }
 
-        // 静音按键样式变换
+        // 有声/静音-按键样式转换
         private void updateSoundButtonAppearance() {
             if (isSoundEnabled) {
                 soundToggleButton.setText("\u266B");
