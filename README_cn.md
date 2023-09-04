@@ -27,34 +27,25 @@ TimeTrackBar 是一个用于计算时间并显示进度的Java程序包，可以
 2. 打开 `TimeTrackBar.java` 文件。
 3. 在IDE中编译和运行程序。
 
-### 使用已编译的jar文件
-
-1. 打开终端。
-2. 使用 `cd` 命令切换到jar文件所在的目录。
-3. 运行命令 `java -jar TimeTrackBar.jar`。
 
 ## 界面说明
 
 - 每行计时任务：包括一个命名区域、剩余时间、总时间以及删除按钮。
+
+使用说明 
+如果输入时间，再点击开始▶ ，则开始倒计时。
+如果无任何输入，直接点击开始按钮▶ ，则开始秒表计时。
+输入可以输入任何时间，比如999时333分，程序可以自动换算为正常计时方式，并开始计时。
 - "+" 按钮：点击可以添加新的计时任务行。
 - "-" 按钮：点击可以删除对应的计时任务行。
-- ▶ 按钮：点击可以开始计时。
 
-## 示例代码
+当点击音乐按钮：
 
-以下是如何使用 TimeTrackBar 程序包的示例代码：
+如果音乐正在播放，则停止音乐并设置为静音模式。
+如果音乐已经停止，并且当前在静音模式，则保持为静音模式。
+如果音乐已经停止，并且当前在有声模式，则不更改任何设置。
 
-```java
-import com.example.timetrackbar.TimeTrackBar;
+当倒计时结束：
 
-public class Main {
-    public static void main(String[] args) {
-        TimeTrackBar timeTrackBar = new TimeTrackBar();
-        // 添加计时任务
-        timeTrackBar.addTask("Task 1", 60); // 任务名为 "Task 1"，总时间为 60 秒
-        timeTrackBar.addTask("Task 2", 120); // 任务名为 "Task 2"，总时间为 120 秒
-        // 启动界面
-        timeTrackBar.startUI();
-    }
-}
-
+如果当前在有声模式，播放音乐。
+如果当前在静音模式，不播放音乐。

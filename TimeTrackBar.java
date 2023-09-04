@@ -53,7 +53,8 @@ public class TimeTrackBar {
         private boolean isTimerRunning = false;
         private Clip clip;
         private boolean isSoundEnabled = true; // 初始状态不静音
-        private boolean isTimerMode = false; // 默认为倒计时模式
+        // private boolean isTimerMode = false; // 默认为倒计时模式
+        private boolean isStopwatchMode = false; // 新增变量用于判断当前是否为秒表模式
 
         public TimerTaskPanel(boolean isFirst) {
             super(new BorderLayout());
@@ -139,6 +140,22 @@ public class TimeTrackBar {
         }
 
         private void startCountdownTimer() {
+            if (isTimerRunning) {
+                if (isStopwatchMode) {
+                    stopStopwatch();
+                } else {
+                    stopCountdownTimer();
+                }
+                return;
+            }
+
+            // 检查是否有输入时间
+            if (daysField.getText().isEmpty() && hoursField.getText().isEmpty() && minutesField.getText().isEmpty()
+                    && secondsField.getText().isEmpty()) {
+                startStopwatch();
+                return;
+            }
+
             if (countdownTimer != null) {
                 countdownTimer.stop();
             }
@@ -190,6 +207,46 @@ public class TimeTrackBar {
             startButton.addActionListener(e -> stopCountdownTimer()); // 添加一个新的监听器来停止计时
 
             printSizes();
+        }
+
+        private void startStopwatch() {
+            progressBar.setMaximum(Integer.MAX_VALUE); // 设置一个大的最大值
+            progressBar.setValue(0);
+            isStopwatchMode = true;
+
+            countdownTimer = new Timer(1000, e -> {
+                int currentValue = progressBar.getValue();
+                progressBar.setValue(currentValue + 1);
+
+                int daysLeft = currentValue / (24 * 60 * 60);
+                currentValue %= 24 * 60 * 60;
+                int hoursLeft = currentValue / (60 * 60);
+                currentValue %= 60 * 60;
+                int minutesLeft = currentValue / 60;
+                int secondsLeft = currentValue % 60;
+
+                countdownRemainingTime
+                        .setText(daysLeft + "d " + hoursLeft + "h " + minutesLeft + "m " + secondsLeft + "s");
+            });
+
+            countdownTimer.start();
+            isTimerRunning = true;
+            startButton.setText("⏹");
+            startButton.setForeground(Color.RED);
+
+            // 当计时开始时，隐藏timeInputPanel
+            timeInputPanel.setVisible(false);
+            TimeTrackBar.this.mainFrame.revalidate();
+        }
+
+        private void stopStopwatch() {
+            if (countdownTimer != null) {
+                countdownTimer.stop();
+            }
+            isStopwatchMode = false;
+            isTimerRunning = false;
+            startButton.setText("▶");
+            startButton.setForeground(Color.GREEN);
         }
 
         private void stopCountdownTimer() {
