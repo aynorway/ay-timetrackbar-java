@@ -32,6 +32,8 @@ public class TimeTrackBar {
         TimerTaskPanel timerTask = new TimerTaskPanel(isFirst);
         taskPanel.add(timerTask);
         mainFrame.setSize(900, mainFrame.getHeight() + 45);
+        mainFrame.revalidate();
+        mainFrame.repaint();
     }
 
     private void removeTimerTask(TimerTaskPanel timerTask) {
@@ -49,8 +51,9 @@ public class TimeTrackBar {
         private Timer countdownTimer;
         private JPanel timeInputPanel; // 新增的面板，用于容纳时间设置部分
         private JButton soundToggleButton; // 警报声音按钮
-        private JButton startButton;
+        private JButton startButton, stopButton;
         private boolean isTimerRunning = false;
+        private boolean isTimerPaused = false;
         private Clip clip;
         private boolean isSoundEnabled = true; // 初始状态不静音
         // private boolean isTimerMode = false; // 默认为倒计时模式
@@ -108,12 +111,6 @@ public class TimeTrackBar {
             timeInputPanel.add(new JLabel("s"));
             eastPanel.add(timeInputPanel);
 
-            countdownRemainingTime = new JLabel("0d 0h 0m 0s");
-            startButton = new JButton("▶");
-            startButton.setForeground(Color.GREEN);
-            startButton.setPreferredSize(new Dimension(40, 30));
-            startButton.addActionListener(e -> startCountdownTimer());
-
             JButton toggleButton = new JButton("⏲"); // 使用时钟字符，用于显示/隐藏时间设置部分
             toggleButton.setPreferredSize(new Dimension(40, 30));
             toggleButton.setForeground(Color.MAGENTA);
@@ -128,15 +125,68 @@ public class TimeTrackBar {
             soundToggleButton.setFont(emojiFont);
             soundToggleButton.setForeground(Color.ORANGE);
             System.out.println(soundToggleButton.getFont());
-
             soundToggleButton.setPreferredSize(new Dimension(40, 30));
             soundToggleButton.addActionListener(e -> toggleSound());
             eastPanel.add(soundToggleButton);
 
+            countdownRemainingTime = new JLabel("0d 0h 0m 0s");
             eastPanel.add(countdownRemainingTime);
+
+            // 开始的入口
+            startButton = new JButton("▶");
+            startButton.setForeground(Color.GREEN);
+            startButton.setPreferredSize(new Dimension(40, 30));
+            startButton.addActionListener(e -> {
+                if (isStopwatchMode) {
+                    stopStopwatch();
+                } else {
+                    startCountdownOrStopwatch();
+                }
+            });
+
+            stopButton = new JButton("⏹");
+            stopButton.setForeground(Color.GRAY);
+            stopButton.setEnabled(false); // 灰色时设为不可点击
+            stopButton.setPreferredSize(new Dimension(40, 30));
+            stopButton.addActionListener(e -> {
+                if (isTimerRunning) {
+                    if (isStopwatchMode) {
+                        stopStopwatch();
+                    } else {
+                        stopCountdownTimer();
+                    }
+                }
+            });
+
             eastPanel.add(startButton);
+            eastPanel.add(stopButton);
             add(eastPanel, BorderLayout.EAST);
 
+        }
+
+        private void startCountdownOrStopwatch() {
+            if (daysField.getText().isEmpty() && hoursField.getText().isEmpty() && minutesField.getText().isEmpty()
+                    && secondsField.getText().isEmpty()) {
+                startStopwatch();
+            } else {
+                startCountdownTimer();
+            }
+        }
+
+        private void updateProgressDisplay() {
+            int currentValue = progressBar.getValue();
+            if (isStopwatchMode || currentValue < countdownDuration) {
+                progressBar.setValue(currentValue + 1);
+                int displayTime = isStopwatchMode ? currentValue : countdownDuration - currentValue;
+                int daysLeft = displayTime / (24 * 60 * 60);
+                displayTime %= 24 * 60 * 60;
+                int hoursLeft = displayTime / (60 * 60);
+                displayTime %= 60 * 60;
+                int minutesLeft = displayTime / 60;
+                int secondsLeft = displayTime % 60;
+                countdownRemainingTime
+                        .setText(daysLeft + "d " + hoursLeft + "h " + minutesLeft + "m " + secondsLeft + "s");
+            }
         }
 
         private void startCountdownTimer() {
@@ -178,8 +228,10 @@ public class TimeTrackBar {
             timeInputPanel.setVisible(false);
             TimeTrackBar.this.mainFrame.revalidate();
 
+            // 每1000ms刷新一次Timer
             countdownTimer = new Timer(1000, e -> {
                 int currentValue = progressBar.getValue();
+                // 更新倒计时显示的逻辑
                 if (currentValue < countdownDuration) {
                     progressBar.setValue(currentValue + 1);
                     int remainingTime = countdownDuration - currentValue - 1;
@@ -192,8 +244,13 @@ public class TimeTrackBar {
                     countdownRemainingTime
                             .setText(daysLeft + "d " + hoursLeft + "h " + minutesLeft + "m " + secondsLeft + "s");
                 } else {
+                    // 倒计时结束，所以停止计时器
                     ((Timer) e.getSource()).stop();
+                    // 当计时结束时，再打开timeInputPanel
+                    timeInputPanel.setVisible(true);
+                    TimeTrackBar.this.mainFrame.revalidate();
                     if (isSoundEnabled) {
+                        // 播放警报声音
                         playAlarmSound();
                     }
                 }
@@ -201,12 +258,13 @@ public class TimeTrackBar {
 
             countdownTimer.start();
             isTimerRunning = true;
-            startButton.setText("⏹"); // ⏹ 是停止符号
-            startButton.setForeground(Color.RED);
+            startButton.setText("\u23F8");
+            startButton.setForeground(Color.GREEN);
             startButton.removeActionListener(startButton.getActionListeners()[0]); // 移除旧的监听器
             startButton.addActionListener(e -> stopCountdownTimer()); // 添加一个新的监听器来停止计时
+            stopButton.setForeground(Color.RED);
+            stopButton.setEnabled(true);
 
-            printSizes();
         }
 
         private void startStopwatch() {
@@ -229,36 +287,42 @@ public class TimeTrackBar {
                         .setText(daysLeft + "d " + hoursLeft + "h " + minutesLeft + "m " + secondsLeft + "s");
             });
 
+            updateProgressDisplay();
+
             countdownTimer.start();
             isTimerRunning = true;
-            startButton.setText("⏹");
-            startButton.setForeground(Color.RED);
-
+            startButton.setText("\u23F8");
+            startButton.setForeground(Color.GREEN);
             // 当计时开始时，隐藏timeInputPanel
             timeInputPanel.setVisible(false);
+            TimeTrackBar.this.mainFrame.revalidate();
+            stopButton.setForeground(Color.RED);
+            stopButton.setEnabled(true);
+        }
+
+        private void resetTimerState() {
+            if (countdownTimer != null) {
+                countdownTimer.stop();
+            }
+            if (clip != null && clip.isActive()) {
+                clip.stop();
+            }
+            isTimerRunning = false;
+            isStopwatchMode = false;
+            startButton.setText("▶");
+            startButton.setForeground(Color.GREEN);
+            stopButton.setForeground(Color.GRAY);
+            stopButton.setEnabled(false);
+            timeInputPanel.setVisible(true);
             TimeTrackBar.this.mainFrame.revalidate();
         }
 
         private void stopStopwatch() {
-            if (countdownTimer != null) {
-                countdownTimer.stop();
-            }
-            isStopwatchMode = false;
-            isTimerRunning = false;
-            startButton.setText("▶");
-            startButton.setForeground(Color.GREEN);
+            resetTimerState();
         }
 
         private void stopCountdownTimer() {
-            if (countdownTimer != null) {
-                countdownTimer.stop();
-            }
-            if (clip != null) {
-                clip.stop();
-            }
-            isTimerRunning = false;
-            startButton.setText("▶");
-            startButton.setForeground(Color.GREEN);
+            resetTimerState();
             startButton.removeActionListener(startButton.getActionListeners()[0]); // 移除旧的监听器
             startButton.addActionListener(e -> startCountdownTimer()); // 添加回原始的监听器
         }
@@ -299,33 +363,6 @@ public class TimeTrackBar {
                 JOptionPane.showMessageDialog(mainFrame, "无法播放声音。");
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(mainFrame, "发生了其他错误。");
-            }
-        }
-
-    }
-
-    private void printSizes() {
-        System.out.println("mainFrame Size: " + mainFrame.getSize());
-        System.out.println("taskPanel Size: " + taskPanel.getSize());
-
-        for (Component component : taskPanel.getComponents()) {
-            if (component instanceof TimerTaskPanel) {
-                TimerTaskPanel timerTaskPanel = (TimerTaskPanel) component;
-                System.out.println("progressBar Size: " + timerTaskPanel.progressBar.getSize());
-                System.out.println("nameField Size: " + timerTaskPanel.nameField.getSize());
-                System.out.println("daysField Size: " + timerTaskPanel.daysField.getSize());
-                System.out.println("hoursField Size: " + timerTaskPanel.hoursField.getSize());
-                System.out.println("minutesField Size: " + timerTaskPanel.minutesField.getSize());
-                System.out.println("secondsField Size: " + timerTaskPanel.secondsField.getSize());
-                System.out.println("remainingTimeLabel Size: " + timerTaskPanel.countdownRemainingTime.getSize());
-                System.out.println("timeInputPanel Size: " + timerTaskPanel.timeInputPanel.getSize());
-                if (timerTaskPanel.countdownTimer != null) {
-                    System.out.println("Timer's Initial Delay: " + timerTaskPanel.countdownTimer.getInitialDelay());
-                    System.out.println("Timer's Delay: " + timerTaskPanel.countdownTimer.getDelay());
-                } else {
-                    System.out.println("Timer is null");
-                }
-                System.out.println("countdownDuration Value: " + timerTaskPanel.countdownDuration);
             }
         }
 
