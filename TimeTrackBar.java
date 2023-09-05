@@ -32,8 +32,6 @@ public class TimeTrackBar {
         TimerTaskPanel timerTask = new TimerTaskPanel(isFirst);
         taskPanel.add(timerTask);
         mainFrame.setSize(900, mainFrame.getHeight() + 45);
-        mainFrame.revalidate();
-        mainFrame.repaint();
     }
 
     private void removeTimerTask(TimerTaskPanel timerTask) {
@@ -52,12 +50,11 @@ public class TimeTrackBar {
         private JPanel timeInputPanel; // 新增的面板，用于容纳时间设置部分
         private JButton soundToggleButton; // 警报声音按钮
         private JButton startButton, stopButton;
-        private boolean isTimerRunning = false;
-        private boolean isTimerPaused = false;
         private Clip clip;
         private boolean isSoundEnabled = true; // 初始状态不静音
-        // private boolean isTimerMode = false; // 默认为倒计时模式
-        private boolean isStopwatchMode = false; // 新增变量用于判断当前是否为秒表模式
+        private boolean isStopwatchMode = false; // 是否是秒表模式
+        private boolean isTimerRunning = false; // 是否计时器正在运行
+        private boolean isTimerPaused = false; // 是否计时器暂停了
 
         public TimerTaskPanel(boolean isFirst) {
             super(new BorderLayout());
@@ -137,12 +134,22 @@ public class TimeTrackBar {
             startButton.setForeground(Color.GREEN);
             startButton.setPreferredSize(new Dimension(40, 30));
             startButton.addActionListener(e -> {
-                if (isStopwatchMode) {
-                    stopStopwatch();
+                if (isTimerRunning) {
+                    if (isStopwatchMode) {
+                        stopStopwatch();
+                    } else {
+                        stopCountdownTimer();
+                    }
                 } else {
-                    startCountdownOrStopwatch();
+                    if (daysField.getText().isEmpty() && hoursField.getText().isEmpty() && minutesField.getText().isEmpty()
+                            && secondsField.getText().isEmpty()) {
+                        startStopwatch();
+                    } else {
+                        startCountdownTimer();
+                    }
                 }
             });
+            
 
             stopButton = new JButton("⏹");
             stopButton.setForeground(Color.GRAY);
@@ -164,31 +171,32 @@ public class TimeTrackBar {
 
         }
 
-        private void startCountdownOrStopwatch() {
-            if (daysField.getText().isEmpty() && hoursField.getText().isEmpty() && minutesField.getText().isEmpty()
-                    && secondsField.getText().isEmpty()) {
-                startStopwatch();
-            } else {
-                startCountdownTimer();
-            }
+        private void updateDisplay(int currentValue, int displayDuration) {
+            int displayTime = isStopwatchMode ? currentValue : displayDuration - currentValue;
+        
+            int daysLeft = displayTime / (24 * 60 * 60);
+            displayTime %= 24 * 60 * 60;
+            int hoursLeft = displayTime / (60 * 60);
+            displayTime %= 60 * 60;
+            int minutesLeft = displayTime / 60;
+            int secondsLeft = displayTime % 60;
+        
+            countdownRemainingTime
+                    .setText(daysLeft + "d " + hoursLeft + "h " + minutesLeft + "m " + secondsLeft + "s");
         }
-
-        private void updateProgressDisplay() {
-            int currentValue = progressBar.getValue();
-            if (isStopwatchMode || currentValue < countdownDuration) {
-                progressBar.setValue(currentValue + 1);
-                int displayTime = isStopwatchMode ? currentValue : countdownDuration - currentValue;
-                int daysLeft = displayTime / (24 * 60 * 60);
-                displayTime %= 24 * 60 * 60;
-                int hoursLeft = displayTime / (60 * 60);
-                displayTime %= 60 * 60;
-                int minutesLeft = displayTime / 60;
-                int secondsLeft = displayTime % 60;
-                countdownRemainingTime
-                        .setText(daysLeft + "d " + hoursLeft + "h " + minutesLeft + "m " + secondsLeft + "s");
-            }
+        
+        private void initializeProgressBar(int duration) {
+            progressBar.setMaximum(duration);
+            progressBar.setValue(0);
+            timeInputPanel.setVisible(false);
+            TimeTrackBar.this.mainFrame.revalidate();
+        
+            startButton.setText("\u23F8");
+            startButton.setForeground(Color.GREEN);
+            stopButton.setForeground(Color.RED);
+            stopButton.setEnabled(true);
         }
-
+        
         private void startCountdownTimer() {
             if (isTimerRunning) {
                 if (isStopwatchMode) {
@@ -198,18 +206,17 @@ public class TimeTrackBar {
                 }
                 return;
             }
-
-            // 检查是否有输入时间
+        
             if (daysField.getText().isEmpty() && hoursField.getText().isEmpty() && minutesField.getText().isEmpty()
                     && secondsField.getText().isEmpty()) {
                 startStopwatch();
                 return;
             }
-
+        
             if (countdownTimer != null) {
                 countdownTimer.stop();
             }
-
+        
             try {
                 int days = daysField.getText().isEmpty() ? 0 : Integer.parseInt(daysField.getText());
                 int hours = hoursField.getText().isEmpty() ? 0 : Integer.parseInt(hoursField.getText());
@@ -220,86 +227,43 @@ public class TimeTrackBar {
                 JOptionPane.showMessageDialog(mainFrame, "请输入有效的时间数值.");
                 return;
             }
-
-            progressBar.setMaximum(countdownDuration);
-            progressBar.setValue(0);
-
-            // 当计时开始时，隐藏timeInputPanel
-            timeInputPanel.setVisible(false);
-            TimeTrackBar.this.mainFrame.revalidate();
-
-            // 每1000ms刷新一次Timer
+        
+            initializeProgressBar(countdownDuration);
+        
             countdownTimer = new Timer(1000, e -> {
                 int currentValue = progressBar.getValue();
-                // 更新倒计时显示的逻辑
                 if (currentValue < countdownDuration) {
                     progressBar.setValue(currentValue + 1);
-                    int remainingTime = countdownDuration - currentValue - 1;
-                    int daysLeft = remainingTime / (24 * 60 * 60);
-                    remainingTime %= 24 * 60 * 60;
-                    int hoursLeft = remainingTime / (60 * 60);
-                    remainingTime %= 60 * 60;
-                    int minutesLeft = remainingTime / 60;
-                    int secondsLeft = remainingTime % 60;
-                    countdownRemainingTime
-                            .setText(daysLeft + "d " + hoursLeft + "h " + minutesLeft + "m " + secondsLeft + "s");
+                    updateDisplay(currentValue + 1, countdownDuration);
                 } else {
-                    // 倒计时结束，所以停止计时器
-                    ((Timer) e.getSource()).stop();
-                    // 当计时结束时，再打开timeInputPanel
+                    countdownTimer.stop();
                     timeInputPanel.setVisible(true);
                     TimeTrackBar.this.mainFrame.revalidate();
                     if (isSoundEnabled) {
-                        // 播放警报声音
                         playAlarmSound();
                     }
                 }
             });
-
+        
             countdownTimer.start();
             isTimerRunning = true;
-            startButton.setText("\u23F8");
-            startButton.setForeground(Color.GREEN);
-            startButton.removeActionListener(startButton.getActionListeners()[0]); // 移除旧的监听器
-            startButton.addActionListener(e -> stopCountdownTimer()); // 添加一个新的监听器来停止计时
-            stopButton.setForeground(Color.RED);
-            stopButton.setEnabled(true);
-
         }
-
+        
         private void startStopwatch() {
-            progressBar.setMaximum(Integer.MAX_VALUE); // 设置一个大的最大值
-            progressBar.setValue(0);
+            initializeProgressBar(Integer.MAX_VALUE);
+        
             isStopwatchMode = true;
-
+        
             countdownTimer = new Timer(1000, e -> {
                 int currentValue = progressBar.getValue();
                 progressBar.setValue(currentValue + 1);
-
-                int daysLeft = currentValue / (24 * 60 * 60);
-                currentValue %= 24 * 60 * 60;
-                int hoursLeft = currentValue / (60 * 60);
-                currentValue %= 60 * 60;
-                int minutesLeft = currentValue / 60;
-                int secondsLeft = currentValue % 60;
-
-                countdownRemainingTime
-                        .setText(daysLeft + "d " + hoursLeft + "h " + minutesLeft + "m " + secondsLeft + "s");
+                updateDisplay(currentValue + 1, Integer.MAX_VALUE);
             });
-
-            updateProgressDisplay();
-
+        
             countdownTimer.start();
             isTimerRunning = true;
-            startButton.setText("\u23F8");
-            startButton.setForeground(Color.GREEN);
-            // 当计时开始时，隐藏timeInputPanel
-            timeInputPanel.setVisible(false);
-            TimeTrackBar.this.mainFrame.revalidate();
-            stopButton.setForeground(Color.RED);
-            stopButton.setEnabled(true);
         }
-
+        
         private void resetTimerState() {
             if (countdownTimer != null) {
                 countdownTimer.stop();
@@ -319,6 +283,8 @@ public class TimeTrackBar {
 
         private void stopStopwatch() {
             resetTimerState();
+            startButton.removeActionListener(startButton.getActionListeners()[0]); // 移除旧的监听器
+            startButton.addActionListener(e -> startCountdownTimer()); // 添加回原始的监听器
         }
 
         private void stopCountdownTimer() {
@@ -333,10 +299,7 @@ public class TimeTrackBar {
             }
 
             isSoundEnabled = !isSoundEnabled;
-            updateSoundButtonAppearance();
-        }
 
-        private void updateSoundButtonAppearance() {
             if (isSoundEnabled) {
                 soundToggleButton.setText("\u266B");
                 soundToggleButton.setForeground(Color.ORANGE);
@@ -345,6 +308,7 @@ public class TimeTrackBar {
                 soundToggleButton.setForeground(Color.BLUE);
             }
         }
+
 
         private void playAlarmSound() {
             if (!isSoundEnabled) {
