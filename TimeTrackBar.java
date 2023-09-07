@@ -11,9 +11,9 @@ import java.io.IOException;
 import java.net.URL;
 
 public class TimeTrackBar {
+
     private JFrame mainFrame;
     private JPanel taskPanel;
-
     public TimeTrackBar() {
         mainFrame = new JFrame("老6倒计时-时间进度条");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -27,13 +27,11 @@ public class TimeTrackBar {
         mainFrame.setSize(900, 70);
         mainFrame.setVisible(true);
     }
-
     private void addNewTimerTask(boolean isFirst) {
         TimerTaskPanel timerTask = new TimerTaskPanel(isFirst);
         taskPanel.add(timerTask);
         mainFrame.setSize(900, mainFrame.getHeight() + 45);
     }
-
     private void removeTimerTask(TimerTaskPanel timerTask) {
         taskPanel.remove(timerTask);
         mainFrame.setSize(900, mainFrame.getHeight() - 45);
@@ -55,6 +53,7 @@ public class TimeTrackBar {
         private boolean isStopwatchMode = false; // 是否是秒表模式
         private boolean isTimerRunning = false; // 是否计时器正在运行
         private boolean isTimerPaused = false; // 是否计时器暂停了
+        private boolean isTimerFinished = true; // 是否计时器停止了
 
         public TimerTaskPanel(boolean isFirst) {
             super(new BorderLayout());
@@ -130,8 +129,13 @@ public class TimeTrackBar {
             startButton = new JButton("▶");
             startButton.setForeground(Color.GREEN);
             startButton.setPreferredSize(new Dimension(40, 30));
+            
             startButton.addActionListener(e -> {
-                if (isTimerRunning) {
+                if (isTimerFinished) {
+                    // 当计时器已经结束时的逻辑
+                    selectTimerMode();
+                    isTimerFinished = false; // 重置标志
+                } else if (isTimerRunning) {
                     if (isStopwatchMode) {
                         if (isTimerPaused) {
                             resumeStopwatch();
@@ -146,13 +150,7 @@ public class TimeTrackBar {
                         }
                     }
                 } else {
-                    if (daysField.getText().isEmpty() && hoursField.getText().isEmpty()
-                            && minutesField.getText().isEmpty()
-                            && secondsField.getText().isEmpty()) {
-                        startStopwatch();
-                    } else {
-                        startCountdownTimer();
-                    }
+                    selectTimerMode();
                 }
             });
             eastPanel.add(startButton);
@@ -174,6 +172,15 @@ public class TimeTrackBar {
 
             add(eastPanel, BorderLayout.EAST);
 
+        }
+
+        private void selectTimerMode() {
+            if (daysField.getText().isEmpty() && hoursField.getText().isEmpty()
+                    && minutesField.getText().isEmpty() && secondsField.getText().isEmpty()) {
+                startStopwatch();
+            } else {
+                startCountdownTimer();
+            }
         }
 
         private void updateDisplay(int currentValue, int displayDuration) {
@@ -283,6 +290,7 @@ public class TimeTrackBar {
                     if (isSoundEnabled) {
                         playAlarmSound();
                     }
+                    isTimerFinished = true;
                 }
             });
 
@@ -293,6 +301,7 @@ public class TimeTrackBar {
             countdownTimer.start();
             isTimerRunning = true;
             isTimerPaused = false;
+            isTimerFinished = false;
         }
 
         private void startStopwatch() {
