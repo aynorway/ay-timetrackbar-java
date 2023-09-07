@@ -117,12 +117,9 @@ public class TimeTrackBar {
             });
             eastPanel.add(toggleButton);
 
-            soundToggleButton = new JButton("\u266B"); // 默认为有声音的状态
-            Font emojiFont = new Font("Apple Color Emoji", Font.PLAIN, 12); // For macOS
-            soundToggleButton.setFont(emojiFont);
-            soundToggleButton.setForeground(Color.ORANGE);
-            System.out.println(soundToggleButton.getFont());
+            soundToggleButton = new JButton("\u266B");
             soundToggleButton.setPreferredSize(new Dimension(40, 30));
+            soundToggleButton.setForeground(Color.ORANGE);
             soundToggleButton.addActionListener(e -> toggleSound());
             eastPanel.add(soundToggleButton);
 
@@ -212,7 +209,7 @@ public class TimeTrackBar {
                 startButton.setForeground(Color.BLUE);
             }
         }
-        
+
         private void pauseCountdownTimer() {
             if (!isStopwatchMode && countdownTimer != null && isTimerRunning && !isTimerPaused) {
                 countdownTimer.stop();
@@ -221,7 +218,7 @@ public class TimeTrackBar {
                 startButton.setForeground(Color.MAGENTA);
             }
         }
-        
+
         private void resumeStopwatch() {
             if (isStopwatchMode && countdownTimer != null && isTimerPaused) {
                 countdownTimer.start();
@@ -230,7 +227,7 @@ public class TimeTrackBar {
                 startButton.setForeground(Color.BLUE);
             }
         }
-        
+
         private void resumeCountdownTimer() {
             if (!isStopwatchMode && countdownTimer != null && isTimerPaused) {
                 countdownTimer.start();
@@ -239,7 +236,7 @@ public class TimeTrackBar {
                 startButton.setForeground(Color.MAGENTA);
             }
         }
-        
+
         private void startCountdownTimer() {
             if (isTimerRunning) {
                 if (isStopwatchMode) {
@@ -289,9 +286,13 @@ public class TimeTrackBar {
                 }
             });
 
+            // 在开始倒计时之前停止任何正在播放的音乐
+            if (clip != null && clip.isActive()) {
+                clip.stop();
+            }
             countdownTimer.start();
             isTimerRunning = true;
-            isTimerPaused = false; 
+            isTimerPaused = false;
         }
 
         private void startStopwatch() {
@@ -308,7 +309,7 @@ public class TimeTrackBar {
 
             countdownTimer.start();
             isTimerRunning = true;
-            isTimerPaused = false; 
+            isTimerPaused = false;
         }
 
         private void resetTimerState() {
@@ -327,6 +328,7 @@ public class TimeTrackBar {
             progressBar.setValue(0); // 重置progressBar的值
             timeInputPanel.setVisible(true);
             TimeTrackBar.this.mainFrame.revalidate();
+            countdownRemainingTime.setText("0d 0h 0m 0s");
         }
 
         private void stopStopwatch() {
@@ -340,17 +342,17 @@ public class TimeTrackBar {
         }
 
         private void toggleSound() {
-            if (clip != null && clip.isActive()) { // 如果音乐正在播放
+            if (clip != null) {
                 clip.stop();
             }
-
             isSoundEnabled = !isSoundEnabled;
 
             if (isSoundEnabled) {
-                soundToggleButton.setText("\u266B");
+                soundToggleButton.setText("\u266B"); // 音符符号
                 soundToggleButton.setForeground(Color.ORANGE);
+
             } else {
-                soundToggleButton.setText("\u263D");
+                soundToggleButton.setText("\u263D"); // 星星符号
                 soundToggleButton.setForeground(Color.BLUE);
             }
         }
@@ -361,10 +363,13 @@ public class TimeTrackBar {
             }
 
             try {
-                URL audioURL = TimeTrackBar.class.getResource("/timbre_whaaat.wav");
-                AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioURL);
-                clip = AudioSystem.getClip();
-                clip.open(audioStream);
+                if (isSoundEnabled && clip == null) {
+                    URL audioURL = TimeTrackBar.class.getResource("/timbre_whaaat.wav");
+                    AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioURL);
+                    clip = AudioSystem.getClip();
+                    clip.open(audioStream);
+                }
+                clip.setFramePosition(0); // 将音乐重置到开始位置
                 clip.start();
                 clip.loop(Clip.LOOP_CONTINUOUSLY);
             } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
