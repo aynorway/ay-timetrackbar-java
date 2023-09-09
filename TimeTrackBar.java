@@ -14,6 +14,7 @@ public class TimeTrackBar {
 
     private JFrame mainFrame;
     private JPanel taskPanel;
+
     public TimeTrackBar() {
         mainFrame = new JFrame("老6倒计时-时间进度条");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -27,11 +28,13 @@ public class TimeTrackBar {
         mainFrame.setSize(900, 70);
         mainFrame.setVisible(true);
     }
+
     private void addNewTimerTask(boolean isFirst) {
         TimerTaskPanel timerTask = new TimerTaskPanel(isFirst);
         taskPanel.add(timerTask);
         mainFrame.setSize(900, mainFrame.getHeight() + 45);
     }
+
     private void removeTimerTask(TimerTaskPanel timerTask) {
         taskPanel.remove(timerTask);
         mainFrame.setSize(900, mainFrame.getHeight() - 45);
@@ -71,7 +74,8 @@ public class TimeTrackBar {
             }
             westPanel.add(controlButton);
 
-            nameField = new JTextField(7);
+            nameField = new ClearableTextField();
+            nameField.setColumns(7);
             nameField.addKeyListener(new KeyAdapter() {
                 public void keyTyped(KeyEvent e) {
                     if (nameField.getText().length() >= 7) {
@@ -129,7 +133,7 @@ public class TimeTrackBar {
             startButton = new JButton("▶");
             startButton.setForeground(Color.GREEN);
             startButton.setPreferredSize(new Dimension(40, 30));
-            
+
             startButton.addActionListener(e -> {
                 if (isTimerFinished) {
                     // 当计时器已经结束时的逻辑
