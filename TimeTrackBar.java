@@ -16,7 +16,7 @@ public class TimeTrackBar {
     private JPanel taskPanel;
 
     public TimeTrackBar() {
-        mainFrame = new JFrame("老6倒计时-时间进度条");
+        mainFrame = new JFrame("");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         taskPanel = new JPanel();
@@ -275,7 +275,11 @@ public class TimeTrackBar {
                 int seconds = secondsField.getText().isEmpty() ? 0 : Integer.parseInt(secondsField.getText());
                 countdownDuration = seconds + minutes * 60 + hours * 60 * 60 + days * 24 * 60 * 60;
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(mainFrame, "请输入有效的时间数值.");
+                JOptionPane.showMessageDialog(mainFrame, "请输入有效的时间数值. \n Please enter a valid time value. \n Vennligst skriv inn en gyldig tidverdi.");
+                daysField.setText("");
+                hoursField.setText("");
+                minutesField.setText("");
+                secondsField.setText("");
                 return;
             }
 
@@ -387,9 +391,9 @@ public class TimeTrackBar {
                 clip.loop(Clip.LOOP_CONTINUOUSLY);
             } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
                 e.printStackTrace();
-                JOptionPane.showMessageDialog(mainFrame, "无法播放声音。");
+                JOptionPane.showMessageDialog(mainFrame, "无法播放声音。\n Unable to play sound.\n Kan ikke spille av lyd.");
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(mainFrame, "发生了其他错误。");
+                JOptionPane.showMessageDialog(mainFrame, "发生了其他错误。\n An error occurred.\n Det oppstod en feil.");
             }
         }
 
