@@ -98,15 +98,22 @@ public class TimeTrackBar {
             // 定义新的timeInputPanel
             timeInputPanel = new JPanel();
             daysField = new JTextField(2);
+            daysField.addKeyListener(enterKeyAdapter);
             timeInputPanel.add(daysField);
             timeInputPanel.add(new JLabel("d"));
+
             hoursField = new JTextField(2);
+            hoursField.addKeyListener(enterKeyAdapter);
             timeInputPanel.add(hoursField);
             timeInputPanel.add(new JLabel("h"));
+
             minutesField = new JTextField(2);
+            minutesField.addKeyListener(enterKeyAdapter);
             timeInputPanel.add(minutesField);
             timeInputPanel.add(new JLabel("m"));
+
             secondsField = new JTextField(2);
+            secondsField.addKeyListener(enterKeyAdapter);
             timeInputPanel.add(secondsField);
             timeInputPanel.add(new JLabel("s"));
             eastPanel.add(timeInputPanel);
@@ -134,29 +141,7 @@ public class TimeTrackBar {
             startButton.setForeground(Color.GREEN);
             startButton.setPreferredSize(new Dimension(40, 30));
 
-            startButton.addActionListener(e -> {
-                if (isTimerFinished) {
-                    // 当计时器已经结束时的逻辑
-                    selectTimerMode();
-                    isTimerFinished = false; // 重置标志
-                } else if (isTimerRunning) {
-                    if (isStopwatchMode) {
-                        if (isTimerPaused) {
-                            resumeStopwatch();
-                        } else {
-                            pauseStopwatch();
-                        }
-                    } else {
-                        if (isTimerPaused) {
-                            resumeCountdownTimer();
-                        } else {
-                            pauseCountdownTimer();
-                        }
-                    }
-                } else {
-                    selectTimerMode();
-                }
-            });
+            startButton.addActionListener(e -> triggerStartButtonAction());
             eastPanel.add(startButton);
 
             stopButton = new JButton("⏹");
@@ -176,6 +161,39 @@ public class TimeTrackBar {
 
             add(eastPanel, BorderLayout.EAST);
 
+        }
+
+        private KeyAdapter enterKeyAdapter = new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    triggerStartButtonAction();
+                }
+            }
+        };
+
+        private void triggerStartButtonAction() {
+            if (isTimerFinished) {
+                // 当计时器已经结束时的逻辑
+                selectTimerMode();
+                isTimerFinished = false; // 重置标志
+            } else if (isTimerRunning) {
+                if (isStopwatchMode) {
+                    if (isTimerPaused) {
+                        resumeStopwatch();
+                    } else {
+                        pauseStopwatch();
+                    }
+                } else {
+                    if (isTimerPaused) {
+                        resumeCountdownTimer();
+                    } else {
+                        pauseCountdownTimer();
+                    }
+                }
+            } else {
+                selectTimerMode();
+            }
         }
 
         private void selectTimerMode() {
@@ -275,7 +293,8 @@ public class TimeTrackBar {
                 int seconds = secondsField.getText().isEmpty() ? 0 : Integer.parseInt(secondsField.getText());
                 countdownDuration = seconds + minutes * 60 + hours * 60 * 60 + days * 24 * 60 * 60;
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(mainFrame, "请输入有效的时间数值. \n Please enter a valid time value. \n Vennligst skriv inn en gyldig tidverdi.");
+                JOptionPane.showMessageDialog(mainFrame,
+                        "请输入有效的时间数值。 \n Please enter a valid time value. \n Vennligst skriv inn en gyldig tidverdi.");
                 daysField.setText("");
                 hoursField.setText("");
                 minutesField.setText("");
