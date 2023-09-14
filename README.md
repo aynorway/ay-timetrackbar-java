@@ -30,7 +30,7 @@ Hello everyone, I'm Adrain Y, also known as "老6" ("Old 6" in English). This ti
 
 **macOS users**: [Download .app]()  
 
-**Developers (Java)**: Ensure Java 11 is installed and download the jar or source code.
+**Developers (Java)**: Ensure Java 11 is installed and [download the jar or source code]().
 
 ---
 
