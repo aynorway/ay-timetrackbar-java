@@ -30,6 +30,18 @@
 
 **macOS 用户**：[☞ 下载 .dmg 文件](https://raw.githubusercontent.com/aynorway/timetrackbar/master/Release/TimeTrackBar-1.0.dmg)
 
+关于MacOS“无法打开应用”提示的解决方法：  
+如果下载后，第一次尝试打开TimeTrackBar.app时遇到以下提示：**“无法打开`TimeTrackBar.app`，因为Apple无法检查其是否包含恶意软件”**，请不要担心。这是macOS的一项安全特性。（因为没有给Apple Developer Program交年费以获得签名）
+
+解决方法：  
+确保你已经将应用拖拽到了Applications文件夹中。如果还没有，请先这样做。
+- 在Applications文件夹中，找到`TimeTrackBar.app`。**不要**直接双击应用图标。**而是右键点击**（或者按住control键并点击）`TimeTrackBar.app`。
+- 在弹出的菜单中选择“**打开**”。
+- 会出现一个对话框警告您该应用可能不安全。但这次，您会看到一个“打开”的选项。请点击“**打开**”。
+这样，应用就会启动了。
+
+注：**以上步骤只需要这样做一次**，以后就可以像打开其他应用一样，正常直接双击其图标启动即可。
+
 **开发者 (Java)**：确保已安装 Java 11 并[下载 TimeTrackBar.jar 文件](https://raw.githubusercontent.com/aynorway/timetrackbar/master/Jar/TimeTrackBar.jar)。
 
 ---

@@ -30,6 +30,19 @@ Hello everyone, I'm Adrain Y, also known as "老6" ("Old 6" in English). This ti
 
 **macOS users**: [☞ Download .dmg](https://raw.githubusercontent.com/aynorway/timetrackbar/master/Release/TimeTrackBar-1.0.dmg)  
 
+How to Resolve the "Cannot Open App" Prompt on MacOS:  
+If, after downloading, you encounter the following message the first time you try to open `TimeTrackBar.app`: **"Cannot open 'TimeTrackBar.app' because Apple cannot check it for malicious software"**, please do not worry. This is a security feature of macOS. (Because I didn't pay the annual fee for the Apple Developer Program to obtain a signature.)
+
+Solution:
+Make sure you have dragged the app into the Applications folder. If not, please do so first.
+- In the Applications folder, locate `TimeTrackBar.app`. **Do NOT** double-click the app icon directly. Instead, **right-click** (or press and hold the control key while clicking) on `TimeTrackBar.app`.
+- From the pop-up menu, select **"Open"**.
+- A dialog box will appear warning you that the app might be unsafe. However, this time, there will be an "Open" option. Click on **"Open"**.
+This way, the application will start.
+
+Note: **You only need to perform the above steps once**. After that, you can open it like any other application, by simply double-clicking its icon.
+
+
 **Developers (Java)**: Ensure Java 11 is installed and [download the jar or source code](https://raw.githubusercontent.com/aynorway/timetrackbar/master/Jar/TimeTrackBar.jar).
 
 ---
