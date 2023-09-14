@@ -28,7 +28,7 @@
 
 **Windows 用户**：[☞ 下载 .exe 文件]()  
 
-**macOS 用户**：[☞ 下载 .dmg 文件]()  
+**macOS 用户**：[☞ 下载 .dmg 文件](https://raw.githubusercontent.com/aynorway/timetrackbar/master/Release/TimeTrackBar-1.0.dmg)
 
 **开发者 (Java)**：确保已安装 Java 11 并[下载 TimeTrackBar.jar 文件](https://raw.githubusercontent.com/aynorway/timetrackbar/master/Jar/TimeTrackBar.jar)。
 

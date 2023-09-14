@@ -28,7 +28,7 @@ Hello everyone, I'm Adrain Y, also known as "老6" ("Old 6" in English). This ti
 
 **Windows users**: [☞ Download .exe]()  
 
-**macOS users**: [☞ Download .dmg]()  
+**macOS users**: [☞ Download .dmg](https://raw.githubusercontent.com/aynorway/timetrackbar/master/Release/TimeTrackBar-1.0.dmg)  
 
 **Developers (Java)**: Ensure Java 11 is installed and [download the jar or source code](https://raw.githubusercontent.com/aynorway/timetrackbar/master/Jar/TimeTrackBar.jar).
 
