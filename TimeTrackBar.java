@@ -4,6 +4,7 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -16,6 +17,8 @@ public class TimeTrackBar {
     private JPanel taskPanel;
 
     public TimeTrackBar() {
+        UIManagerHelper.setDefaultUIFont(new FontUIResource("Arial", Font.PLAIN, 11));
+
         mainFrame = new JFrame("");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -66,6 +69,12 @@ public class TimeTrackBar {
             if (isFirst) {
                 controlButton = new JButton("+");
                 controlButton.setPreferredSize(new Dimension(40, 30));
+                controlButton.setMargin(new Insets(0, 0, 0, 0));
+                controlButton.setBorder(BorderFactory.createEmptyBorder());
+                controlButton.setHorizontalAlignment(SwingConstants.CENTER);
+                controlButton.setVerticalAlignment(SwingConstants.CENTER);
+                UIManager.getDefaults().put("Button.border", BorderFactory.createEmptyBorder());
+
                 controlButton.addActionListener(e -> addNewTimerTask(false));
             } else {
                 controlButton = new JButton("-");
@@ -89,7 +98,7 @@ public class TimeTrackBar {
             // ProgressBar
             progressBar = new JProgressBar();
             progressBar.setValue(0);
-            progressBar.setPreferredSize(new Dimension(Integer.MAX_VALUE, 30));
+            progressBar.setPreferredSize(new Dimension(Integer.MAX_VALUE, 15));
             progressBar.setStringPainted(true);
             add(progressBar, BorderLayout.CENTER);
 
