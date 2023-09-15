@@ -17,7 +17,7 @@ public class TimeTrackBar {
     private JPanel taskPanel;
 
     public TimeTrackBar() {
-        UIManagerHelper.setDefaultUIFont(new FontUIResource("Arial", Font.PLAIN, 11));
+        UIManagerHelper.setDefaultUIFont(new FontUIResource("Serif", Font.PLAIN, 12));
 
         mainFrame = new JFrame("");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
