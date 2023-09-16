@@ -28,7 +28,9 @@ Hello everyone, I'm Adrain Y, also known as "老6" ("Old 6" in English). This ti
 
 **Windows users**: [☞ Download .exe]()  
 
-**macOS users**: [☞ Download .dmg](https://raw.githubusercontent.com/aynorway/timetrackbar/master/Release/TimeTrackBar-1.0.dmg)  
+"After downloading, double-click TimeTrackBarPackage.exe to install. The automatic installation path is: C:\Program Files\TimeTrackBar. Navigate to that path and find TimeTrackBar.exe. Double-click to open. (The Windows interface has not been optimized yet; the main focus currently is on functional effectiveness.)"
+
+**macOS users**: [☞ Download .dmg]()  
 
 How to Resolve the "Cannot Open App" Prompt on MacOS:  
 If, after downloading, you encounter the following message the first time you try to open `TimeTrackBar.app`: **"Cannot open 'TimeTrackBar.app' because Apple cannot check it for malicious software"**, please do not worry. This is a security feature of macOS. (Because I didn't pay the annual fee for the Apple Developer Program to obtain a signature.)
@@ -43,12 +45,13 @@ This way, the application will start.
 Note: **You only need to perform the above steps once**. After that, you can open it like any other application, by simply double-clicking its icon.
 
 
-**Developers (Java)**: Ensure Java 11 is installed and [download the jar or source code](https://raw.githubusercontent.com/aynorway/timetrackbar/master/Jar/TimeTrackBar.jar).
+**Developers (Java)**: Ensure Java 11 is installed and [download the jar or source code]().
 
 ---
 
 ## User Interface Guide
 
+![Alt text](Interface.png)
 From left to right:
 
 - **"+" Button**: Add a new timing task.

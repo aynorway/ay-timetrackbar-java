@@ -69,12 +69,6 @@ public class TimeTrackBar {
             if (isFirst) {
                 controlButton = new JButton("+");
                 controlButton.setPreferredSize(new Dimension(40, 30));
-                controlButton.setMargin(new Insets(0, 0, 0, 0));
-                controlButton.setBorder(BorderFactory.createEmptyBorder());
-                controlButton.setHorizontalAlignment(SwingConstants.CENTER);
-                controlButton.setVerticalAlignment(SwingConstants.CENTER);
-                UIManager.getDefaults().put("Button.border", BorderFactory.createEmptyBorder());
-
                 controlButton.addActionListener(e -> addNewTimerTask(false));
             } else {
                 controlButton = new JButton("-");
