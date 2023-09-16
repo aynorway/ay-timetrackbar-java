@@ -1,8 +1,6 @@
-[☞ 中文 Chinese](README_cn.md)
+[☞ English (英文)](https://github.com/aynorway/timetrackbar/blob/master/README.md)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[☞ Chinese (中文)](https://github.com/aynorway/timetrackbar/blob/master/README_cn.md)
 
 ---
-
-[English:](README.md)
 
 # TimeTrackBar Package
 
@@ -26,11 +24,11 @@ Hello everyone, I'm Adrain Y, also known as "老6" ("Old 6" in English). This ti
 
 ## Installation and Usage
 
-**Windows users**: [☞ Download .exe]()  
-
+**Windows users**: [☞ Download TimeTrackBarPackage v1.0 for Windows (.exe)](https://github.com/aynorway/timetrackbar/releases/download/v1.0/TimeTrackBarPackage.exe)
+ 
 "After downloading, double-click TimeTrackBarPackage.exe to install. The automatic installation path is: C:\Program Files\TimeTrackBar. Navigate to that path and find TimeTrackBar.exe. Double-click to open. (The Windows interface has not been optimized yet; the main focus currently is on functional effectiveness.)"
 
-**macOS users**: [☞ Download .dmg]()  
+**macOS users**: [☞ Download TimeTrackBar-1.0 for macOS (.dmg)](https://github.com/aynorway/timetrackbar/releases/download/v1.0/TimeTrackBar-1.0.dmg)
 
 How to Resolve the "Cannot Open App" Prompt on MacOS:  
 If, after downloading, you encounter the following message the first time you try to open `TimeTrackBar.app`: **"Cannot open 'TimeTrackBar.app' because Apple cannot check it for malicious software"**, please do not worry. This is a security feature of macOS. (Because I didn't pay the annual fee for the Apple Developer Program to obtain a signature.)
@@ -44,8 +42,7 @@ This way, the application will start.
 
 Note: **You only need to perform the above steps once**. After that, you can open it like any other application, by simply double-clicking its icon.
 
-
-**Developers (Java)**: Ensure Java 11 is installed and [download the jar or source code]().
+**Developers (Java)**: Ensure Java 11 is installed and [download the jar or source code](https://github.com/aynorway/timetrackbar/releases/download/v1.0/TimeTrackBar.jar).
 
 ---
 

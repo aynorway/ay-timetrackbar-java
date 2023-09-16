@@ -1,8 +1,6 @@
-[☞  English 英文](README.md)
+[☞ English (英文)](https://github.com/aynorway/timetrackbar/blob/master/README.md)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[☞ Chinese (中文)](https://github.com/aynorway/timetrackbar/blob/master/README_cn.md)
 
 ---
-
-[中文：](README_cn.md)
 
 # TimeTrackBar 程序包
 
@@ -26,12 +24,14 @@
 
 ## 安装与使用
 
-**Windows 用户**：[☞ 下载 .exe 文件]()  [珍爱生命，祝福Windows（吐槽篇）](docs/TuCao.md)
+**Windows 用户**：[☞ 下载 TimeTrackBarPackage v1.0 Windows 版 (.exe)](https://github.com/aynorway/timetrackbar/releases/download/v1.0/TimeTrackBarPackage.exe)
+ 
+关于制作，这里有一篇吐槽文档。" [珍爱生命，祝福Windows（吐槽篇）](https://github.com/aynorway/timetrackbar/blob/master/docs/TuCao.md)"
 
 下载后，双击TimeTrackBarPackage.exe安装，自动安装路径为：C:\Program Files\TimeTrackBar
 在路径下，找到TimeTrackBar.exe，双击打开即可。（Windows端界面还未优化，目前以功能有效为主）
 
-**macOS 用户**：[☞ 下载 .dmg 文件]()
+**macOS 用户**：[☞ 下载 TimeTrackBar-1.0 macOS 版 (.dmg)](https://github.com/aynorway/timetrackbar/releases/download/v1.0/TimeTrackBar-1.0.dmg)
 
 关于MacOS“无法打开应用”提示的解决方法：  
 如果下载后，第一次尝试打开TimeTrackBar.app时遇到以下提示：**“无法打开`TimeTrackBar.app`，因为Apple无法检查其是否包含恶意软件”**，请不要担心。这是macOS的一项安全特性。（因为没有给Apple Developer Program交年费以获得签名）
@@ -45,7 +45,7 @@
 
 注：**以上步骤只需要这样做一次**，以后就可以像打开其他应用一样，正常直接双击其图标启动即可。
 
-**开发者 (Java)**：确保已安装 Java 11 并[下载 TimeTrackBar.jar 文件]()。
+**开发者 (Java)**：确保已安装 Java 11 并[下载源代码或 TimeTrackBar.jar 文件](https://github.com/aynorway/timetrackbar/releases/download/v1.0/TimeTrackBar.jar)。
 
 ---
 
