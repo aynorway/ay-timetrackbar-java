@@ -31,7 +31,7 @@
 下载后，双击TimeTrackBarPackage.exe安装，自动安装路径为：C:\Program Files\TimeTrackBar
 在路径下，找到TimeTrackBar.exe，双击打开即可。（Windows端界面还未优化，目前以功能有效为主）
 
-**macOS 用户**：[☞ 下载 TimeTrackBar-1.0 macOS 版 (.dmg)](https://github.com/aynorway/timetrackbar/releases/download/v1.0/TimeTrackBar-1.0.dmg)
+**macOS ARM（M芯片）用户**：[☞ 下载 TimeTrackBar-1.0 macOS 版 (.dmg)](https://github.com/aynorway/timetrackbar/releases/download/v1.0/TimeTrackBar-1.0.dmg)
 
 关于MacOS“无法打开应用”提示的解决方法：  
 如果下载后，第一次尝试打开TimeTrackBar.app时遇到以下提示：**“无法打开`TimeTrackBar.app`，因为Apple无法检查其是否包含恶意软件”**，请不要担心。这是macOS的一项安全特性。（因为没有给Apple Developer Program交年费以获得签名）
@@ -82,15 +82,20 @@
 ├── ClearableTextField$2.class
 ├── ClearableTextField.class
 ├── ClearableTextField.java
+├── FontCheck.class
+├── FontCheck.java
+├── Interface.png
 ├── META-INF
 │   └── MANIFEST.MF
 ├── README.md
 ├── README_cn.md
 ├── TimeTrackBar$TimerTaskPanel$1.class
+├── TimeTrackBar$TimerTaskPanel$2.class
 ├── TimeTrackBar$TimerTaskPanel.class
 ├── TimeTrackBar.class
-├── TimeTrackBar.jar
 ├── TimeTrackBar.java
+├── UIManagerHelper.class
+├── UIManagerHelper.java
 └── timbre_whaaat.wav
 ```
 

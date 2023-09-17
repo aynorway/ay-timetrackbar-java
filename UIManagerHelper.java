@@ -1,7 +1,6 @@
 // UIManagerHelper.java
 import javax.swing.UIManager;
 import javax.swing.plaf.FontUIResource;
-import java.awt.Font;
 
 public class UIManagerHelper {
 
