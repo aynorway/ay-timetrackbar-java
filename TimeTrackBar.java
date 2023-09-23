@@ -10,6 +10,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.URL;
+import java.awt.event.ActionEvent;
+
 
 public class TimeTrackBar {
 
@@ -28,6 +30,8 @@ public class TimeTrackBar {
 
         addNewTimerTask(true);
 
+        setupMacOSMenuBar();
+
         mainFrame.setSize(900, 70);
         mainFrame.setVisible(true);
     }
@@ -43,6 +47,30 @@ public class TimeTrackBar {
         mainFrame.setSize(900, mainFrame.getHeight() - 45);
         mainFrame.revalidate();
         mainFrame.repaint();
+    }
+
+    private void setupMacOSMenuBar() {
+        // 检查是否运行在 macOS 上
+        String os = System.getProperty("os.name").toLowerCase();
+        if (!os.contains("mac")) return;
+
+        // 创建 "窗口" 菜单
+        JMenuBar menuBar = new JMenuBar();
+        JMenu windowMenu = new JMenu("窗口");
+        menuBar.add(windowMenu);
+
+        // 创建 "置顶" 菜单项
+        JCheckBoxMenuItem alwaysOnTopItem = new JCheckBoxMenuItem("置顶");
+        alwaysOnTopItem.addActionListener((ActionEvent e) -> {
+            boolean isSelected = alwaysOnTopItem.getState();
+            mainFrame.setAlwaysOnTop(isSelected);
+        });
+
+        windowMenu.add(alwaysOnTopItem);
+
+        // 如果你的程序已经有一个菜单栏，你可以将窗口菜单添加到现有的菜单栏
+        // 否则，你可以使用以下代码设置菜单栏
+        mainFrame.setJMenuBar(menuBar);
     }
 
     private class TimerTaskPanel extends JPanel {
@@ -422,6 +450,7 @@ public class TimeTrackBar {
     }
 
     public static void main(String[] args) {
+        System.setProperty("apple.laf.useScreenMenuBar", "true");
         SwingUtilities.invokeLater(TimeTrackBar::new);
     }
 }

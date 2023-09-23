@@ -1,3 +1,22 @@
+###################################################
+# Adrian's Personal .gitignore Template
+# 
+# Hi everyone. This template provides a comprehensive collection of rules to help exclude unwanted files and directories 
+# from a Git repository. It's tailored for a variety of use cases and development environments.
+#
+# Overview:
+# 1. General exclusions (e.g., history directories, macOS metadata)
+# 2. Node.js related exclusions (logs, dependency directories, cache, etc.)
+# 3. Java-specific exclusions (compiled files, build artifacts)
+# 4. Build tools (Maven, Gradle)
+# 5. IDEs (IntelliJ, Eclipse, NetBeans, Visual Studio Code)
+# 6. OS-specific (e.g., .DS_Store for macOS)
+#
+# Feel free to modify and expand upon this template as needed for your projects.
+###################################################
+# Latest update: 2023 Sep 19 
+
+# ————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 # gitignore一定要在上传GitHub之前设置好，要不然很多文件都会保留在git中
 
 # 排除历史文件夹
@@ -13,11 +32,37 @@
 # 在你的项目根目录下找到 .gitignore 文件，如果没有则创建一个。在该文件中添加以下内容：
 # .DS_Store
 # 这样配置后，Git 将自动忽略 .DS_Store 文件，不再将其包含在版本控制中。
-# 2023 Aug 
 .DS_Store
 
-# ——————————————————————————————————————
-# 以下是Github上的gitignore-Node模版。包含.env node_modules 等等 
+# ————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+# 这是使用react时react自己生成的原生模板 
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+# 以下是Github上的gitignore - Node模版。包含.env node_modules 等等 
 
 # Logs
 logs
@@ -150,7 +195,7 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-# ——————————————————————————————————————
+# ————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 # 以下是Java的一个模版 A complete .gitignore file for Java. 
 
 ##############################
@@ -158,7 +203,7 @@ dist
 ##############################
 .mtj.tmp/
 *.class
-# *.jar
+*.jar
 *.war
 *.ear
 *.nar

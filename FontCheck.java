@@ -16,5 +16,6 @@ public class FontCheck {
             }
         }
         System.out.println("Compatible fonts: \t" + count);
+        System.out.println(System.getProperty("os.name"));
     }
 }
