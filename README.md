@@ -19,6 +19,7 @@ Hello everyone, I'm Adrain Y, also known as "老6". This time-tracking software 
 - Start/pause timer functionality.
 - Sound alert/mute feature.
 - Auto detection of stopwatch/countdown mode.
+- "Always On Top" mode for keeping the application window in the foreground.
 
 ---
 
