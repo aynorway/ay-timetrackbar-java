@@ -10,7 +10,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.URL;
-import java.awt.event.ActionEvent;
 
 public class TimeTrackBar {
 
@@ -24,37 +23,22 @@ public class TimeTrackBar {
     public class MacOSMenuSetup implements MenuSetup {
         @Override
         public void setupMenu(JFrame mainFrame) {
-            // ... [之前macOS的代码]
-            // private void setupMacOSMenuBar() {
             // 检查是否运行在 macOS 上
             String os = System.getProperty("os.name").toLowerCase();
-            if (!os.contains("mac"))
+            if (!os.contains("mac")) {
+                System.out.println(System.getProperty("os.name"));
                 return;
-
-            // 创建 "窗口" 菜单
-            JMenuBar menuBar = new JMenuBar();
-            JMenu windowMenu = new JMenu("窗口");
-            menuBar.add(windowMenu);
-
-            // 创建 "置顶" 菜单项
-            JCheckBoxMenuItem alwaysOnTopItem = new JCheckBoxMenuItem("置顶");
-            alwaysOnTopItem.addActionListener((ActionEvent e) -> {
-                boolean isSelected = alwaysOnTopItem.getState();
-                mainFrame.setAlwaysOnTop(isSelected);
-            });
-
-            windowMenu.add(alwaysOnTopItem);
-
-            // 设置菜单栏
-            mainFrame.setJMenuBar(menuBar);
-            // }
+            }
+            // 使用MenuHelper类来设置菜单
+            MenuHelper.setupCommonMenu(mainFrame);
         }
     }
 
     public class WindowsMenuSetup implements MenuSetup {
         @Override
         public void setupMenu(JFrame mainFrame) {
-            // ... [为Windows定义的菜单设置代码]
+            // 使用MenuHelper类来设置菜单
+            MenuHelper.setupCommonMenu(mainFrame);
         }
     }
 
