@@ -173,12 +173,14 @@ public class TimeTrackBar {
                 TimeTrackBar.this.mainFrame.revalidate(); // 确保面板重新布局
             });
             eastPanel.add(toggleButton);
+            addHoverEffectToButton(toggleButton, Color.CYAN, Color.MAGENTA);
 
             soundToggleButton = new JButton("\u266B");
             soundToggleButton.setPreferredSize(new Dimension(40, 30));
             soundToggleButton.setForeground(Color.ORANGE);
             soundToggleButton.addActionListener(e -> toggleSound());
             eastPanel.add(soundToggleButton);
+            addHoverEffectToButton(soundToggleButton, Color.CYAN, Color.ORANGE);
 
             countdownRemainingTime = new JLabel("0d 0h 0m 0s");
             eastPanel.add(countdownRemainingTime);
@@ -190,6 +192,7 @@ public class TimeTrackBar {
 
             startButton.addActionListener(e -> triggerStartButtonAction());
             eastPanel.add(startButton);
+            addHoverEffectToButton(startButton, Color.CYAN, Color.GREEN);
 
             stopButton = new JButton("⏹");
             stopButton.setForeground(Color.GRAY);
