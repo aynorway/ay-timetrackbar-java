@@ -208,6 +208,7 @@ public class TimeTrackBar {
                 }
             });
             eastPanel.add(stopButton);
+            addHoverEffectToButton(stopButton, Color.CYAN, Color.RED);
 
             add(eastPanel, BorderLayout.EAST);
 
@@ -423,7 +424,7 @@ public class TimeTrackBar {
             isStopwatchMode = false;
             startButton.setText("▶");
             startButton.setForeground(Color.GREEN);
-            stopButton.setForeground(Color.GRAY);
+            // stopButton.setForeground(Color.RED);
             stopButton.setEnabled(false);
             progressBar.setValue(0); // 重置progressBar的值
             timeInputPanel.setVisible(true);
