@@ -380,7 +380,12 @@ public class TimeTrackBar {
             }
 
             initializeProgressBar(countdownDuration);
+            startButton.setText("\u23F8"); // ⏸ \u23F8
             startButton.setForeground(Color.MAGENTA);
+            addHoverEffectToButton(startButton, Color.CYAN, Color.MAGENTA);
+            stopButton.setForeground(Color.RED);
+            stopButton.setEnabled(true);
+            addHoverEffectToButton(stopButton, Color.CYAN, Color.RED);
 
             countdownTimer = new Timer(1000, e -> {
                 int currentValue = progressBar.getValue();
