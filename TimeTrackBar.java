@@ -5,9 +5,13 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
+
+import java.awt.event.MouseEvent;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
 import java.io.IOException;
 import java.net.URL;
 
@@ -115,6 +119,7 @@ public class TimeTrackBar {
                 controlButton.addActionListener(e -> removeTimerTask(this));
             }
             westPanel.add(controlButton);
+            addHoverEffectToButton(controlButton, Color.CYAN, Color.BLACK);
 
             nameField = new ClearableTextField();
             nameField.setColumns(7);
@@ -203,6 +208,20 @@ public class TimeTrackBar {
 
             add(eastPanel, BorderLayout.EAST);
 
+        }
+
+        private void addHoverEffectToButton(JButton button, Color hoverColor, Color normalColor) {
+            button.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    button.setForeground(hoverColor);
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    button.setForeground(normalColor);
+                }
+            });
         }
 
         private KeyAdapter enterKeyAdapter = new KeyAdapter() {
