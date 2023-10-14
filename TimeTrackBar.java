@@ -119,7 +119,7 @@ public class TimeTrackBar {
                 controlButton.addActionListener(e -> removeTimerTask(this));
             }
             westPanel.add(controlButton);
-            addHoverEffectToButton(controlButton, Color.CYAN, Color.BLACK);
+            addHoverEffectWithOriginalColor(controlButton, Color.CYAN);
 
             nameField = new ClearableTextField();
             nameField.setColumns(7);
@@ -165,7 +165,7 @@ public class TimeTrackBar {
             timeInputPanel.add(new JLabel("s"));
             eastPanel.add(timeInputPanel);
 
-            JButton toggleButton = new JButton("⏲"); // 使用时钟字符，用于显示/隐藏时间设置部分
+            JButton toggleButton = new JButton("⏲"); // ⏲ \u23F2 用于显示/隐藏时间设置部分
             toggleButton.setPreferredSize(new Dimension(40, 30));
             toggleButton.setForeground(Color.MAGENTA);
             toggleButton.addActionListener(e -> {
@@ -173,28 +173,28 @@ public class TimeTrackBar {
                 TimeTrackBar.this.mainFrame.revalidate(); // 确保面板重新布局
             });
             eastPanel.add(toggleButton);
-            addHoverEffectToButton(toggleButton, Color.CYAN, Color.MAGENTA);
+            addHoverEffectWithOriginalColor(toggleButton, Color.CYAN);
 
-            soundToggleButton = new JButton("\u266B");
+            soundToggleButton = new JButton("\u266B"); // ♫ \u266B
             soundToggleButton.setPreferredSize(new Dimension(40, 30));
             soundToggleButton.setForeground(Color.ORANGE);
             soundToggleButton.addActionListener(e -> toggleSound());
             eastPanel.add(soundToggleButton);
-            addHoverEffectToButton(soundToggleButton, Color.CYAN, Color.ORANGE);
+            addHoverEffectWithOriginalColor(soundToggleButton, Color.CYAN);
 
             countdownRemainingTime = new JLabel("0d 0h 0m 0s");
             eastPanel.add(countdownRemainingTime);
 
             // 开始的入口
-            startButton = new JButton("▶");
+            startButton = new JButton("▶"); // ▶ \u25B6
             startButton.setForeground(Color.GREEN);
             startButton.setPreferredSize(new Dimension(40, 30));
 
             startButton.addActionListener(e -> triggerStartButtonAction());
             eastPanel.add(startButton);
-            addHoverEffectToButton(startButton, Color.CYAN, Color.GREEN);
+            addHoverEffectWithOriginalColor(startButton, Color.CYAN);
 
-            stopButton = new JButton("⏹");
+            stopButton = new JButton("⏹"); // ⏹ \u23F9
             stopButton.setForeground(Color.GRAY);
             stopButton.setEnabled(false); // 灰色时设为不可点击
             stopButton.setPreferredSize(new Dimension(40, 30));
@@ -208,7 +208,7 @@ public class TimeTrackBar {
                 }
             });
             eastPanel.add(stopButton);
-            addHoverEffectToButton(stopButton, Color.CYAN, Color.RED);
+            addHoverEffectWithOriginalColor(stopButton, Color.CYAN);
 
             add(eastPanel, BorderLayout.EAST);
 
@@ -224,6 +224,22 @@ public class TimeTrackBar {
                 @Override
                 public void mouseExited(MouseEvent e) {
                     button.setForeground(normalColor);
+                }
+            });
+        }
+
+        private void addHoverEffectWithOriginalColor(JButton button, Color hoverColor) {
+            button.addMouseListener(new MouseAdapter() {
+                Color originalColor = button.getForeground();
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    button.setForeground(hoverColor);
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    button.setForeground(originalColor);
                 }
             });
         }
@@ -289,17 +305,13 @@ public class TimeTrackBar {
             progressBar.setValue(0);
             timeInputPanel.setVisible(false);
             TimeTrackBar.this.mainFrame.revalidate();
-
-            startButton.setText("\u23F8");
-            stopButton.setForeground(Color.RED);
-            stopButton.setEnabled(true);
         }
 
         private void pauseStopwatch() {
             if (isStopwatchMode && countdownTimer != null && isTimerRunning && !isTimerPaused) {
                 countdownTimer.stop();
                 isTimerPaused = true;
-                startButton.setText("▶");
+                startButton.setText("▶"); // ▶ \u25B6
                 startButton.setForeground(Color.BLUE);
             }
         }
@@ -308,7 +320,7 @@ public class TimeTrackBar {
             if (!isStopwatchMode && countdownTimer != null && isTimerRunning && !isTimerPaused) {
                 countdownTimer.stop();
                 isTimerPaused = true;
-                startButton.setText("▶");
+                startButton.setText("▶"); // ▶ \u25B6
                 startButton.setForeground(Color.MAGENTA);
             }
         }
@@ -317,7 +329,7 @@ public class TimeTrackBar {
             if (isStopwatchMode && countdownTimer != null && isTimerPaused) {
                 countdownTimer.start();
                 isTimerPaused = false;
-                startButton.setText("\u23F8");
+                startButton.setText("\u23F8"); // ⏸ \u23F8
                 startButton.setForeground(Color.BLUE);
             }
         }
@@ -326,7 +338,7 @@ public class TimeTrackBar {
             if (!isStopwatchMode && countdownTimer != null && isTimerPaused) {
                 countdownTimer.start();
                 isTimerPaused = false;
-                startButton.setText("\u23F8");
+                startButton.setText("\u23F8"); // ⏸ \u23F8
                 startButton.setForeground(Color.MAGENTA);
             }
         }
@@ -398,7 +410,12 @@ public class TimeTrackBar {
 
         private void startStopwatch() {
             initializeProgressBar(Integer.MAX_VALUE);
+            startButton.setText("\u23F8"); // ⏸ \u23F8
             startButton.setForeground(Color.BLUE);
+            addHoverEffectToButton(startButton, Color.CYAN, Color.BLUE);
+            stopButton.setForeground(Color.RED);
+            stopButton.setEnabled(true);
+            addHoverEffectToButton(stopButton, Color.CYAN, Color.RED);
 
             isStopwatchMode = true;
 
@@ -422,9 +439,9 @@ public class TimeTrackBar {
             }
             isTimerRunning = false;
             isStopwatchMode = false;
-            startButton.setText("▶");
+            startButton.setText("▶"); // ▶ \u25B6
             startButton.setForeground(Color.GREEN);
-            // stopButton.setForeground(Color.RED);
+            addHoverEffectToButton(startButton, Color.CYAN, Color.GREEN);
             stopButton.setEnabled(false);
             progressBar.setValue(0); // 重置progressBar的值
             timeInputPanel.setVisible(true);
@@ -449,11 +466,11 @@ public class TimeTrackBar {
             isSoundEnabled = !isSoundEnabled;
 
             if (isSoundEnabled) {
-                soundToggleButton.setText("\u266B"); // 音符符号
+                soundToggleButton.setText("\u266B"); // ♫ \u266B
                 soundToggleButton.setForeground(Color.ORANGE);
 
             } else {
-                soundToggleButton.setText("\u263D"); // 星星符号
+                soundToggleButton.setText("\u263D"); // ☽ \u263D
                 soundToggleButton.setForeground(Color.BLUE);
             }
         }

@@ -9,7 +9,7 @@ import java.awt.event.MouseEvent;
 
 public class ClearableTextField extends JTextField {
 
-    private final String CLEAR_ICON = "\u2715";
+    private final String CLEAR_ICON = "\u2715"; // ✕ \u2715 
     private boolean showIcon = false;
     private boolean hoverOverTextField = false;
 

@@ -35,7 +35,7 @@ public class MenuHelper {
         aboutItem.addActionListener((ActionEvent e) -> {
             // 当用户点击 "About" 时，显示一个对话框
             String appInfo = "App Name: TimeTrackBar\n" +
-                    "Version: 1.0.0\n" +
+                    "Version: 1.1\n" +
                     "© 2023 AdrianY\n";
             JOptionPane.showMessageDialog(mainFrame,
                     appInfo,
