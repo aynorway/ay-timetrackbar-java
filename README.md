@@ -29,7 +29,7 @@ Hello everyone, I'm Adrain Y, also known as "老6". This time-tracking software 
  
 "After downloading, double-click TimeTrackBarPackage.exe to install. The automatic installation path is: C:\Program Files\TimeTrackBar. Navigate to that path and find TimeTrackBar.exe. Double-click to open. (The Windows interface has not been optimized yet; the main focus currently is on functional effectiveness.)"
 
-**macOS ARM (M-series) users**: [☞ Download TimeTrackBar-1.0 for macOS (.dmg)](https://github.com/aynorway/timetrackbar/releases/download/v1.0/TimeTrackBar-1.0.dmg)
+**macOS ARM (M-series) users**: [☞ Download TimeTrackBar-1.1 for macOS (.dmg)](https://github.com/aynorway/ay-timetrackbar-java/releases/download/v1.1/TimeTrackBar-1.1.dmg)
 
 How to Resolve the "Cannot Open App" Prompt on MacOS:  
 If, after downloading, you encounter the following message the first time you try to open `TimeTrackBar.app`: **"Cannot open 'TimeTrackBar.app' because Apple cannot check it for malicious software"**, please do not worry. This is a security feature of macOS. (Because I didn't pay the annual fee for the Apple Developer Program to obtain a signature.)
