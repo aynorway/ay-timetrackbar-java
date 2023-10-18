@@ -26,8 +26,6 @@
 ## 安装与使用
 
 **Windows 用户**：[☞ 下载 TimeTrackBarPackage v1.0 Windows 版 (.exe)](https://github.com/aynorway/timetrackbar/releases/download/v1.0/TimeTrackBarPackage.exe)
- 
-关于制作，这里有一篇吐槽文档。" [珍爱生命，祝福Windows（吐槽篇）](https://github.com/aynorway/timetrackbar/blob/master/docs/TuCao.md)"
 
 下载后，双击TimeTrackBarPackage.exe安装，自动安装路径为：C:\Program Files\TimeTrackBar
 在路径下，找到TimeTrackBar.exe，双击打开即可。（Windows端界面还未优化，目前以功能有效为主）
