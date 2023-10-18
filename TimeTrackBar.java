@@ -119,7 +119,7 @@ public class TimeTrackBar {
                 controlButton.addActionListener(e -> removeTimerTask(this));
             }
             westPanel.add(controlButton);
-            addHoverEffectWithOriginalColor(controlButton, Color.CYAN);
+            addHoverEffectWithOriginalColor(controlButton, Color.MAGENTA);
 
             nameField = new ClearableTextField();
             nameField.setColumns(7);

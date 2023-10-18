@@ -1,8 +1,8 @@
-[☞ English (英文)](https://github.com/aynorway/timetrackbar/blob/master/README.md)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[☞ Chinese (中文)](https://github.com/aynorway/timetrackbar/blob/master/README_cn.md)
+<img src="icons/ttb17.png" width="64" style="margin-right: 10px; vertical-align: middle;"> [☞ English (英文)](https://github.com/aynorway/timetrackbar/blob/master/README.md)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[☞ Chinese (中文)](https://github.com/aynorway/timetrackbar/blob/master/README_cn.md)
 
 ---
 
-# TimeTrackBar Package
+# <img src="icons/ttb17.png" width="64" style="margin-right: 6px; vertical-align: middle;"> TimeTrackBar Package 
 
 Hello everyone, I'm Adrain Y, also known as "老6". This time-tracking software is one of my personal favorite software projects. I've always been on the lookout for a tool that displays both the time and a progress bar, aiming for a more intuitive feel of the passing time. After not finding a minimalist timer that met my requirements for quite some time, I decided to create one myself. Currently, I use this software almost daily to track my work hours, which greatly assists me in understanding and allocating my time more effectively. This project is developed entirely in Java, ensuring easy cross-platform compilation. Versions for both MacBook and Windows have been released. To guarantee the software's compatibility, I've intentionally employed the foundational Unicode character set. In the upcoming versions, I plan to introduce several new features, including report generation, data analysis, and an always-on-top window feature. Moreover, the ability to continue monitoring time even when the computer is in sleep mode is under development. I invite everyone who values their time to give it a try. This software will remain open-source indefinitely, hoping to benefit many.
 
