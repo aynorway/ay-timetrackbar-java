@@ -32,9 +32,10 @@ Hello everyone, I'm Adrain Y, also known as "老6". This time-tracking software 
 **macOS ARM (M-series) users**: [☞ Download TimeTrackBar v1.2 for macOS (.dmg)](https://github.com/aynorway/ay-timetrackbar-java/releases/download/v1.2/TimeTrackBar-1.2.dmg)
 
 How to Resolve the "Cannot Open App" Prompt on MacOS:  
+<img src="pics/cannotopen.jpeg" width="128" align="left" style="margin: 10px; vertical-align: middle;">  
 If, after downloading, you encounter the following message the first time you try to open `TimeTrackBar.app`: **"Cannot open 'TimeTrackBar.app' because Apple cannot check it for malicious software"**, please do not worry. This is a security feature of macOS. (Because I didn't pay the annual fee for the Apple Developer Program to obtain a signature.)
-
-Solution:
+<br style="clear:both;">
+Solution:  
 Make sure you have dragged the app into the Applications folder. If not, please do so first.
 - In the Applications folder, locate `TimeTrackBar.app`. **Do NOT** double-click the app icon directly. Instead, **right-click** (or press and hold the control key while clicking) on `TimeTrackBar.app`.
 - From the pop-up menu, select **"Open"**.
