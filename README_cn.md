@@ -33,10 +33,14 @@
 **macOS ARM（M芯片）用户**：[☞ 下载 TimeTrackBar v1.2 macOS 版 (.dmg)](https://github.com/aynorway/ay-timetrackbar-java/releases/download/v1.2/TimeTrackBar-1.2.dmg)
 
 关于MacOS“无法打开应用”提示的解决方法：  
+
 <img src="pics/cannotopen.jpeg" width="128" align="left" style="margin: 10px; vertical-align: middle;">  
+
 如果下载后，第一次尝试打开TimeTrackBar.app时遇到以下提示：**“无法打开`TimeTrackBar.app`，因为Apple无法检查其是否包含恶意软件”**，请不要担心。这是macOS的一项安全特性。（因为没有给Apple Developer Program交年费以获得签名）
+
 <br style="clear:both;">
-解决方法：  
+
+**解决方法：**  
 确保你已经将应用拖拽到了Applications文件夹中。如果还没有，请先这样做。
 - 在Applications文件夹中，找到`TimeTrackBar.app`。**不要**直接双击应用图标。**而是右键点击**（或者按住control键并点击）`TimeTrackBar.app`。
 - 在弹出的菜单中选择“**打开**”。

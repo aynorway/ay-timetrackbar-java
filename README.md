@@ -39,7 +39,7 @@ If, after downloading, you encounter the following message the first time you tr
 
 <br style="clear:both;">
 
-Solution:  
+**Solution:**  
 Make sure you have dragged the app into the Applications folder. If not, please do so first.
 - In the Applications folder, locate `TimeTrackBar.app`. **Do NOT** double-click the app icon directly. Instead, **right-click** (or press and hold the control key while clicking) on `TimeTrackBar.app`.
 - From the pop-up menu, select **"Open"**.
