@@ -2,7 +2,7 @@
 
 ---
 
-# <img src="icons/ttb17.png" width="64" style="margin-right: 6px; vertical-align: middle;"> TimeTrackBar 程序包
+# <img src="icons/ttb17.png" width="64" style="margin-right: 6px; vertical-align: middle;"> [TimeTrackBar PC应用程序 (Mac/Win)](https://github.com/aynorway/ay-timetrackbar-java/tree/master)
 
 大家好，我是Adrain Y，昵称“老6”。这款计时软件是我个人最为喜欢的程序项目之一。我一直寻找一个能够同时显示时间并有进度条的工具，希望能够更直观地感受时间流逝。由于长时间没有找到符合我要求的简约计时软件，我决定自己动手制作。目前，我几乎每天都在使用这款软件来追踪我的工作时间，这非常有助于我更好地了解和分配我的时间。这个项目采用100%Java语言开发，以确保能够方便地为不同平台编译。现已发布了MacBook和Windows两个版本。为了保证软件的兼容性，我特地使用了基础的Unicode字符集。在接下来的版本中，我计划引入多项新功能，如生成报告、数据分析和窗口置顶。另外，让程序在电脑睡眠模式下继续监听时间的功能已经在研发之中。欢迎所有珍惜时间的朋友使用及尝试。该软件将永久开源，希望能帮助到大家。
 
