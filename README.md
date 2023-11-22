@@ -82,23 +82,14 @@ From left to right:
 
 ```
 .
-├── ClearableTextField$1.class
-├── ClearableTextField$2.class
-├── ClearableTextField.class
 ├── ClearableTextField.java
-├── FontCheck.class
 ├── FontCheck.java
 ├── Interface.png
 ├── META-INF
 │   └── MANIFEST.MF
 ├── README.md
 ├── README_cn.md
-├── TimeTrackBar$TimerTaskPanel$1.class
-├── TimeTrackBar$TimerTaskPanel$2.class
-├── TimeTrackBar$TimerTaskPanel.class
-├── TimeTrackBar.class
 ├── TimeTrackBar.java
-├── UIManagerHelper.class
 ├── UIManagerHelper.java
 └── timbre_whaaat.wav
 ```
