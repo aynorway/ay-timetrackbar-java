@@ -87,10 +87,19 @@ From left to right:
 ├── Interface.png
 ├── META-INF
 │   └── MANIFEST.MF
+├── MenuHelper.java
 ├── README.md
 ├── README_cn.md
 ├── TimeTrackBar.java
 ├── UIManagerHelper.java
+├── docs
+│   ├── macos-app-icon.md
+├── icons
+│   ├── ttb17.png
+│   ├── ttblogo.icns
+│   └── ttblogo.iconset
+├── pics
+│   └── cannotopen.jpeg
 └── timbre_whaaat.wav
 ```
 
