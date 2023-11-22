@@ -82,24 +82,24 @@
 
 ```
 .
-├── ClearableTextField$1.class
-├── ClearableTextField$2.class
-├── ClearableTextField.class
 ├── ClearableTextField.java
-├── FontCheck.class
 ├── FontCheck.java
 ├── Interface.png
 ├── META-INF
 │   └── MANIFEST.MF
+├── MenuHelper.java
 ├── README.md
 ├── README_cn.md
-├── TimeTrackBar$TimerTaskPanel$1.class
-├── TimeTrackBar$TimerTaskPanel$2.class
-├── TimeTrackBar$TimerTaskPanel.class
-├── TimeTrackBar.class
 ├── TimeTrackBar.java
-├── UIManagerHelper.class
 ├── UIManagerHelper.java
+├── docs
+│   ├── macos-app-icon.md
+├── icons
+│   ├── ttb17.png
+│   ├── ttblogo.icns
+│   └── ttblogo.iconset
+├── pics
+│   └── cannotopen.jpeg
 └── timbre_whaaat.wav
 ```
 
